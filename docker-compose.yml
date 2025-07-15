@@ -1,0 +1,12 @@
+version: '3.0'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: devops/Dockerfile
+    ports:
+      - 4000:3000/tcp
+    volumes:
+      - '.:/app'
+    command: /bin/sh -c "npm install && npm run start"
+    restart: always

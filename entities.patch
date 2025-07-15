@@ -1,0 +1,264 @@
+Subject: [PATCH] entities
+---
+Index: src/modules/common/entities/cotacao-situacao.entity.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/modules/common/entities/cotacao-situacao.entity.ts b/src/modules/common/entities/cotacao-situacao.entity.ts
+new file mode 100644
+--- /dev/null	(date 1744313772851)
++++ b/src/modules/common/entities/cotacao-situacao.entity.ts	(date 1744313772851)
+@@ -0,0 +1,11 @@
++import { BaseEntity, Column, Entity, PrimaryColumn, Unique } from 'typeorm'
++
++@Entity()
++@Unique(['nome'])
++export class CotacaoSituacao extends BaseEntity {
++  @PrimaryColumn()
++  id: number
++
++  @Column({ length: 255 })
++  nome: string
++}
+Index: src/modules/common/utils/numeric.transformer.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/modules/common/utils/numeric.transformer.ts b/src/modules/common/utils/numeric.transformer.ts
+new file mode 100644
+--- /dev/null	(date 1744314528897)
++++ b/src/modules/common/utils/numeric.transformer.ts	(date 1744314528897)
+@@ -0,0 +1,19 @@
++import { ValueTransformer } from 'typeorm'
++
++export class NumericTransformer implements ValueTransformer {
++  to(value: number | null): number | null {
++    if (['', null, undefined].includes(value as any)) {
++      return null
++    }
++
++    return Number(value)
++  }
++
++  from(value: string | null): number | null {
++    if (['', null, undefined].includes(value as any)) {
++      return null
++    }
++
++    return parseFloat(value!)
++  }
++}
+Index: src/modules/common/entities/cotacao.entity.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/modules/common/entities/cotacao.entity.ts b/src/modules/common/entities/cotacao.entity.ts
+new file mode 100644
+--- /dev/null	(date 1744315753430)
++++ b/src/modules/common/entities/cotacao.entity.ts	(date 1744315753430)
+@@ -0,0 +1,69 @@
++import {
++  BaseEntity,
++  BeforeInsert,
++  Column,
++  CreateDateColumn,
++  DeleteDateColumn,
++  Entity,
++  ManyToOne,
++  OneToMany,
++  PrimaryColumn,
++  Unique,
++  UpdateDateColumn,
++} from 'typeorm'
++import { ulid } from 'ulid'
++import { CotacaoItem } from './cotacao-item.entity'
++import { CotacaoSituacao } from './cotacao-situacao.entity'
++import { Arquivo } from './arquivo.entity'
++
++@Entity()
++@Unique(['anoAviso', 'nrAviso'])
++export class Cotacao extends BaseEntity {
++  ANEXOS_CODIGO = 'anexos'
++
++  @PrimaryColumn({ length: 26 })
++  id: string
++
++  @Column({ type: 'int' })
++  nrAviso: number
++
++  @Column({ type: 'int' })
++  anoAviso: number
++
++  @Column({ length: 255 })
++  nome: string
++
++  @Column({ length: 255 })
++  nrProcesso: string
++
++  @Column()
++  dtDou: Date
++
++  @Column()
++  dtLimiteProposta: Date
++
++  @Column({ length: 2000 })
++  descricao: string
++
++  @OneToMany(() => CotacaoItem, (cotacaoItem) => cotacaoItem.cotacao)
++  itens: CotacaoItem[]
++
++  @ManyToOne(() => CotacaoSituacao, { nullable: false })
++  situacao: CotacaoSituacao
++
++  @CreateDateColumn()
++  dtCriacao: Date
++
++  @UpdateDateColumn()
++  dtAtualizacao: Date
++
++  @DeleteDateColumn()
++  dtExclusao: Date
++
++  arquivos: Arquivo[]
++
++  @BeforeInsert()
++  generateId() {
++    this.id = this.id || ulid()
++  }
++}
+Index: src/modules/common/entities/arquivo.entity.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/modules/common/entities/arquivo.entity.ts b/src/modules/common/entities/arquivo.entity.ts
+new file mode 100644
+--- /dev/null	(date 1744315326963)
++++ b/src/modules/common/entities/arquivo.entity.ts	(date 1744315326963)
+@@ -0,0 +1,59 @@
++import {
++  BaseEntity,
++  BeforeInsert,
++  Column,
++  CreateDateColumn,
++  DeleteDateColumn,
++  Entity,
++  Index,
++  ManyToOne,
++  PrimaryColumn,
++  UpdateDateColumn,
++} from 'typeorm'
++import { ulid } from 'ulid'
++import { Usuario } from './usuario.entity'
++
++@Entity()
++@Index(['dono', 'donoId'])
++export class Arquivo extends BaseEntity {
++  @PrimaryColumn({ length: 26 })
++  id: string
++
++  @Column({ length: 30, nullable: true })
++  dono?: string
++
++  @Column({ length: 26, nullable: true })
++  donoId?: string
++
++  @Column({ length: 50 })
++  grupo: string
++
++  @Column({ length: 255 })
++  nome: string
++
++  @Column({ length: 500 })
++  caminho: string
++
++  @Column({ length: 255 })
++  mimetype: string
++
++  @Column({ type: 'int' })
++  tamanho: number
++
++  @ManyToOne(() => Usuario)
++  usuario?: Usuario
++
++  @CreateDateColumn()
++  dtCriacao: Date
++
++  @UpdateDateColumn()
++  dtAtualizacao: Date
++
++  @DeleteDateColumn()
++  dtExclusao: Date
++
++  @BeforeInsert()
++  generateId() {
++    this.id = this.id || ulid()
++  }
++}
+Index: src/modules/common/entities/cotacao-item.entity.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/modules/common/entities/cotacao-item.entity.ts b/src/modules/common/entities/cotacao-item.entity.ts
+new file mode 100644
+--- /dev/null	(date 1744314881287)
++++ b/src/modules/common/entities/cotacao-item.entity.ts	(date 1744314881287)
+@@ -0,0 +1,54 @@
++import {
++  BaseEntity,
++  BeforeInsert,
++  Column,
++  CreateDateColumn,
++  DeleteDateColumn,
++  Entity,
++  ManyToOne,
++  PrimaryColumn,
++  Unique,
++  UpdateDateColumn,
++} from 'typeorm'
++import { ulid } from 'ulid'
++import { Cotacao } from './cotacao.entity'
++import { MaterialItem } from './material-item.entity'
++import { NumericTransformer } from '../utils/numeric.transformer'
++
++@Entity()
++@Unique(['cotacao', 'item', 'dtExclusao'])
++export class CotacaoItem extends BaseEntity {
++  @PrimaryColumn({ length: 26 })
++  id: string
++
++  @Column()
++  unidadeMedida: string
++
++  @Column({
++    type: 'numeric',
++    precision: 10,
++    scale: 3,
++    transformer: new NumericTransformer(),
++  })
++  quantidade: number
++
++  @ManyToOne(() => Cotacao, (cotacao) => cotacao.itens, { nullable: false })
++  cotacao: Cotacao
++
++  @ManyToOne(() => MaterialItem, { nullable: false })
++  item: MaterialItem
++
++  @CreateDateColumn()
++  dtCriacao: Date
++
++  @UpdateDateColumn()
++  dtAtualizacao: Date
++
++  @DeleteDateColumn()
++  dtExclusao: Date
++
++  @BeforeInsert()
++  generateId() {
++    this.id = this.id || ulid()
++  }
++}
