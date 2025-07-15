@@ -1,12 +1,15 @@
-version: '3.0'
 services:
-  app:
+  backend:
+    container_name: save-money-backend
     build:
       context: .
       dockerfile: devops/Dockerfile
-    ports:
-      - 4000:3000/tcp
+    command: "/bin/sh -c 'npm install && npm run migration:run && npm run start:dev'"
+    working_dir: /app
     volumes:
-      - '.:/app'
-    command: /bin/sh -c "npm install && npm run start"
+      - "./:/app"
+    ports:
+      - "4000:3000"
+    env_file:
+      - .env
     restart: always

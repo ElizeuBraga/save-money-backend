@@ -9,7 +9,10 @@ import { CreateUserDto } from '../dto/create-user-dto'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService, private readonly createUseCase: CreateUserUsecase,) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly createUseCase: CreateUserUsecase,
+  ) {}
 
   /**
    * Rota limitada à 5 requisições (acertando ou errando a senha).

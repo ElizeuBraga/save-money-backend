@@ -1,14 +1,16 @@
-FROM node:22 as production-stage
+    # devops/Dockerfile
+FROM node:22
 
-MAINTAINER Elizeu Braga
-# set default timezone env variable and set env variable for node not checking tls
-ARG timezone=America/Fortaleza
-ENV TZ=$timezone
+RUN apt-get update -y && \
+    apt-get install -y libaio1 unzip netcat-openbsd
 
-# set container timezone
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime; \
-    echo $TZ > /etc/timezone
-
-# set workdir and copy local files to it
 WORKDIR /app
 COPY . .
+
+RUN npm install -g @nestjs/cli
+
+RUN npm install
+RUN npm run build
+
+# ENTRYPOINT ["/app/devops/entrypoint.sh"]
+CMD ["npm", "run", "start:prod"]

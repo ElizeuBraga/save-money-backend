@@ -5,6 +5,7 @@ import { Repository } from 'typeorm'
 import { Transactional } from 'typeorm-transactional'
 import { User } from '../../common/entities/user.entity'
 import { CreateUserDto } from '../dto/create-user-dto'
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class CreateUserUsecase {
@@ -30,16 +31,18 @@ export class CreateUserUsecase {
     }
 
     if (!user) {
+      const hash = bcrypt.hashSync(body.password, 10)
+
       user = this.repository.create({
         name: body.name,
         email: body.email,
-        password: body.password,
+        password: hash,
       })
 
       const [err] = await to(this.repository.save(user))
 
       if (err) {
-        console.log('Erro')
+        throw new ConflictException('Não foi possível cadastrar o usuário.')
       }
     }
 
