@@ -17,8 +17,6 @@ export default registerAs<TypeOrmModuleOptions>('database', () => {
     synchronize: true,
   }
 
-  console.log(teste)
-
   return {
     type: 'sqlite',
     database: `data/${process.env.DATABASE}`,
