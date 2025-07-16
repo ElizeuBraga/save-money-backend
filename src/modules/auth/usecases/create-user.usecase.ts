@@ -5,13 +5,14 @@ import { Repository } from 'typeorm'
 import { Transactional } from 'typeorm-transactional'
 import { User } from '../../common/entities/user.entity'
 import { CreateUserDto } from '../dto/create-user-dto'
-import * as bcrypt from 'bcrypt'
+import { PasswordService } from '../services/password.service'
 
 @Injectable()
 export class CreateUserUsecase {
   constructor(
     @InjectRepository(User)
     private readonly repository: Repository<User>,
+    private readonly passwordService: PasswordService,
   ) {}
 
   @Transactional()
@@ -31,7 +32,7 @@ export class CreateUserUsecase {
     }
 
     if (!user) {
-      const hash = bcrypt.hashSync(body.password, 10)
+      const hash = this.passwordService.hash(body.password)
 
       user = this.repository.create({
         name: body.name,

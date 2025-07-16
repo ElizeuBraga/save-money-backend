@@ -2,7 +2,6 @@ import { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { App } from 'supertest/types'
 import { createTestApp } from './utils/test-setup'
-import { ulid } from 'ulid'
 
 describe('Auth', () => {
   let app: INestApplication<App>
@@ -26,9 +25,9 @@ describe('Auth', () => {
     return request(app.getHttpServer())
       .post('/auth/login')
       .send({
-        email: `elizeubragasantos@gmail.com`,
+        username: `elizeubragasantos@gmail.com`,
         password: 'save',
       })
-      .expect([200, 401])
+      .expect([201])
   })
 })
