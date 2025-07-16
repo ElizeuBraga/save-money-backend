@@ -3,10 +3,13 @@ import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { AppModule } from 'src/app.module'
 import {
   addTransactionalDataSource,
+  getDataSourceByName,
   initializeTransactionalContext,
   StorageDriver,
 } from 'typeorm-transactional'
 import { DataSource } from 'typeorm'
+
+let transactionalContextInitialized = false
 export async function createTestApp(): Promise<INestApplication> {
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [AppModule],
@@ -16,12 +19,17 @@ export async function createTestApp(): Promise<INestApplication> {
 
   const dataSource = app.get(DataSource)
 
-  // Configura o recurso da annotation @Transaction
-  // para transacionar tudo dentro da function executada
-  initializeTransactionalContext({
-    storageDriver: StorageDriver.AUTO,
-  })
-  addTransactionalDataSource(dataSource)
+  if (!transactionalContextInitialized) {
+    initializeTransactionalContext({
+      storageDriver: StorageDriver.AUTO,
+    })
+
+    transactionalContextInitialized = true
+
+    addTransactionalDataSource(dataSource)
+  } else {
+    getDataSourceByName('default')
+  }
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
 

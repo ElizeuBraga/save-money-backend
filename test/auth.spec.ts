@@ -12,14 +12,23 @@ describe('Auth', () => {
   })
 
   it('Register', () => {
-    const ulidUser = ulid()
     return request(app.getHttpServer())
       .post('/auth/register')
       .send({
-        name: `Name ${ulidUser}`,
-        email: `${ulidUser}@gmail.com`,
-        password: '123456',
+        name: `Elizeu`,
+        email: `elizeubragasantos@gmail.com`,
+        password: 'save',
       })
       .expect([201, 409])
+  })
+
+  it('Login', () => {
+    return request(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email: `elizeubragasantos@gmail.com`,
+        password: 'save',
+      })
+      .expect([200, 401])
   })
 })
