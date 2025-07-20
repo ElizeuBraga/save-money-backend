@@ -37,7 +37,7 @@ export class User extends BaseEntity {
   @DeleteDateColumn()
   deletedAt: Date
 
-  roles: string[]
+  roles = ['bank:read']
 
   @BeforeInsert()
   generateId() {

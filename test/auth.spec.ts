@@ -28,6 +28,6 @@ describe('Auth', () => {
         username: `elizeubragasantos@gmail.com`,
         password: 'save',
       })
-      .expect([201])
+      .expect([200])
   })
 })

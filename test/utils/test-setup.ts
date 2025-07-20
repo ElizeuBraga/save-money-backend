@@ -8,6 +8,7 @@ import {
   StorageDriver,
 } from 'typeorm-transactional'
 import { DataSource } from 'typeorm'
+import * as request from 'supertest'
 
 let transactionalContextInitialized = false
 export async function createTestApp(): Promise<INestApplication> {
@@ -34,4 +35,23 @@ export async function createTestApp(): Promise<INestApplication> {
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
 
   return await app.init()
+}
+
+interface AuthResponse {
+  access_token: string
+}
+
+export async function getToken(app: INestApplication): Promise<string> {
+  const response = await request(app.getHttpServer()).post('/auth/login').send({
+    username: 'elizeubragasantos@gmail.com',
+    password: 'save',
+  })
+
+  const body = response.body as AuthResponse
+
+  if (body.access_token) {
+    return body.access_token
+  }
+
+  return ''
 }

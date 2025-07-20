@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common'
 import { Throttle } from '@nestjs/throttler'
 import { User } from 'src/modules/common/entities/user.entity'
 import { MultipleAuthGuard } from '../guard/multiple-auth.guard'
@@ -22,6 +30,7 @@ export class AuthController {
   @UseGuards(MultipleAuthGuard)
   @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Post('login')
+  @HttpCode(200)
   login(@Request() { user }: { user: User }) {
     return this.authService.generateJWT(user)
   }
