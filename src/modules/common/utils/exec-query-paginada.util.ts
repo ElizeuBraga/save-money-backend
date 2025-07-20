@@ -10,7 +10,7 @@ export async function executaPaginacao<T extends ObjectLiteral>(
   const offset = (page - 1) * perPage + 1
   const limit = page * perPage
 
-  const [itens, total] = await Promise.all([
+  const [items, total] = await Promise.all([
     query.offset(offset).limit(limit).getMany(),
     page === 1 ? query.getCount() : null,
   ])
@@ -18,7 +18,7 @@ export async function executaPaginacao<T extends ObjectLiteral>(
   const pages = total ? Math.ceil(total / perPage) : null
 
   return {
-    itens,
+    items,
     total,
     page,
     perPage,

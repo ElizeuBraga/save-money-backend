@@ -10,7 +10,7 @@ export class IdResponse {
 
 export class Paginada<T> {
   @ApiProperty()
-  itens: T[]
+  items: T[]
 
   /**
    * Can return null case not in page 1
