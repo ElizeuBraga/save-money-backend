@@ -8,7 +8,7 @@ export class IdResponse {
   id: string | number
 }
 
-export class Paginada<T> {
+export class Paged<T> {
   @ApiProperty()
   items: T[]
 

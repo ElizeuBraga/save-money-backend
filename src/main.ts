@@ -7,9 +7,12 @@ import {
   StorageDriver,
 } from 'typeorm-transactional'
 import { AppModule } from './app.module'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { operationIdFactory } from './modules/common/utils/swagger-operation-id-factory.util'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  const appPrefix = process.env.PREFIX || '/api'
 
   const dataSource = app.get(DataSource)
 
@@ -23,6 +26,22 @@ async function bootstrap() {
   app.setGlobalPrefix('api')
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
   app.enableCors()
+
+  const config = new DocumentBuilder()
+    .setTitle('Save Money')
+    .setDescription('API')
+    .setVersion('1.0.0')
+    .addBearerAuth()
+    .build()
+
+  const documentFactory = () =>
+    SwaggerModule.createDocument(app, config, {
+      operationIdFactory,
+    })
+  SwaggerModule.setup(appPrefix, app, documentFactory, {
+    jsonDocumentUrl: appPrefix + '/swagger.json',
+  })
+
   await app.listen(process.env.PORT || 3000, '0.0.0.0')
 }
 

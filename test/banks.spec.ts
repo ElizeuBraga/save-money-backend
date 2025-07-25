@@ -16,6 +16,6 @@ describe('Banks', () => {
     return request(app.getHttpServer())
       .get('/banks')
       .set('Authorization', `Bearer ${token}`)
-      .expect(201)
+      .expect(200)
   })
 })

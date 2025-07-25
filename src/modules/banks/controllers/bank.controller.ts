@@ -11,7 +11,7 @@ export class BankController {
 
   @ApiOkRespostaPaginada(Bank)
   @Get()
-  async paginar(
+  async paginate(
     @Query() input: PaginateBankDto,
     @Request() { user }: { user: User },
   ) {

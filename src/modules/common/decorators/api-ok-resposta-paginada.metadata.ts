@@ -1,12 +1,12 @@
 import { Type, applyDecorators } from '@nestjs/common'
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger'
-import { Paginada } from '../types'
+import { Paged } from '../types'
 
 export const ApiOkRespostaPaginada = <DataDto extends Type<unknown>>(
   dataDto: DataDto,
 ) =>
   applyDecorators(
-    ApiExtraModels(Paginada, dataDto),
+    ApiExtraModels(Paged, dataDto),
     ApiOkResponse({
       schema: {
         allOf: [
@@ -18,7 +18,7 @@ export const ApiOkRespostaPaginada = <DataDto extends Type<unknown>>(
               },
             },
           },
-          { $ref: getSchemaPath(Paginada) },
+          { $ref: getSchemaPath(Paged) },
         ],
       },
     }),
