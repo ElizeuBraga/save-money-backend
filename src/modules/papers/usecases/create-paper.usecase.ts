@@ -8,15 +8,15 @@ import { CreatePaperDto } from '../dto/create-paper.dto'
 import { Transactional } from 'typeorm-transactional'
 import { to } from '../../common/utils/to.util'
 import { changeError } from '../../common/utils/change-error.util'
-import { Category } from '../../common/entities/Category.entity'
+import { Paper } from '../../common/entities/Paper.entity'
 
 @Injectable()
 export class CreatePaperUsecase {
   roles = [RoleEnum.CATEGORY_CREATE]
 
   constructor(
-    @InjectRepository(Category)
-    private readonly repository: Repository<Category>,
+    @InjectRepository(Paper)
+    private readonly repository: Repository<Paper>,
     private readonly authorizationService: AuthorizationService,
   ) {}
 

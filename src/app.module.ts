@@ -12,6 +12,7 @@ import { DevelopModule } from './modules/develop/develop.module'
 import { CategoryModule } from './modules/categories/category.module'
 import { ProductModule } from './modules/products/product.module'
 import { PaperModule } from './modules/papers/paper.module'
+import { dataSourceFactory } from './modules/common/database/data-source.factory'
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PaperModule } from './modules/papers/paper.module'
       useFactory: (configService: ConfigService) => {
         return configService.get<TypeOrmModuleOptions>('database')!
       },
+      dataSourceFactory,
     }),
     ThrottlerModule.forRoot({
       // Zeramos no uso global para poder restringir direto na rota desejada

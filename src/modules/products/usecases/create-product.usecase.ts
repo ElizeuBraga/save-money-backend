@@ -8,15 +8,15 @@ import { CreateProductDto } from '../dto/create-product.dto'
 import { Transactional } from 'typeorm-transactional'
 import { to } from '../../common/utils/to.util'
 import { changeError } from '../../common/utils/change-error.util'
-import { Category } from '../../common/entities/Category.entity'
+import { Product } from '../../common/entities/Product.entity'
 
 @Injectable()
 export class CreateProductUsecase {
-  roles = [RoleEnum.CATEGORY_CREATE]
+  roles = [RoleEnum.PRODUCT_CREATE]
 
   constructor(
-    @InjectRepository(Category)
-    private readonly repository: Repository<Category>,
+    @InjectRepository(Product)
+    private readonly repository: Repository<Product>,
     private readonly authorizationService: AuthorizationService,
   ) {}
 
@@ -24,7 +24,10 @@ export class CreateProductUsecase {
   async exec(body: CreateProductDto, user: User) {
     this.authorizationService.validate(user, this.roles)
 
-    const created = this.repository.create(body)
+    const created = this.repository.create({
+      name: body.name,
+      category: { id: body.categoryId },
+    })
     const [err] = await to(this.repository.save(created))
 
     if (err) {

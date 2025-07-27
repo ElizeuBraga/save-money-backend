@@ -5,11 +5,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
   PrimaryColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm'
 import { ulid } from 'ulid'
+import { Product } from './Product.entity'
 
 @Entity()
 @Unique(['name'])
@@ -19,6 +21,9 @@ export class Paper extends BaseEntity {
 
   @Column({ length: 255 })
   name: string
+
+  @ManyToOne(() => Product, (product) => product.papers)
+  product: Product
 
   @CreateDateColumn()
   createdAt: Date

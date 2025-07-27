@@ -5,29 +5,26 @@ import { RoleEnum } from 'src/modules/common/types/enum'
 import { Repository, SelectQueryBuilder } from 'typeorm'
 import { PaginatePaperDto } from '../dto/paginate-paper.dto'
 import { User } from '../../common/entities/user.entity'
-import { executaPaginacao } from '../../common/utils/exec-query-paginada.util'
 import { Category } from '../../common/entities/Category.entity'
+import { Paper } from '../../common/entities/Paper.entity'
 
 @Injectable()
 export class PaginatePaperUsecase {
   roles = [RoleEnum.CATEGORY_READ]
 
   constructor(
-    @InjectRepository(Category)
-    private readonly repository: Repository<Category>,
+    @InjectRepository(Paper)
+    private readonly repository: Repository<Paper>,
     private readonly authorizationService: AuthorizationService,
   ) {}
 
   async exec(body: PaginatePaperDto, user: User) {
     this.authorizationService.validate(user, this.roles)
 
-    const query = this.repository
-      .createQueryBuilder('category')
-      .select(['category.id', 'category.name'])
-
-    this.aplicarFiltros(query, body)
-
-    return await executaPaginacao(query, body)
+    return this.repository.find({
+      select: { id: true, name: true },
+      relations: ['products'],
+    })
   }
 
   private aplicarFiltros(

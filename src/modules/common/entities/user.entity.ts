@@ -42,6 +42,8 @@ export class User extends BaseEntity {
     'bank:create',
     'category:read',
     'category:create',
+    'product:read',
+    'product:create',
     'paper:read',
     'paper:create',
   ]

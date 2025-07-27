@@ -5,4 +5,9 @@ export class CreateProductDto {
   @MaxLength(255)
   @IsString()
   name: string
+
+  @MinLength(1)
+  @MaxLength(255)
+  @IsString()
+  categoryId: string
 }

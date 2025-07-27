@@ -5,7 +5,6 @@ import { RoleEnum } from 'src/modules/common/types/enum'
 import { Repository, SelectQueryBuilder } from 'typeorm'
 import { PaginateCategoryDto } from '../dto/paginate-category.dto'
 import { User } from '../../common/entities/user.entity'
-import { executaPaginacao } from '../../common/utils/exec-query-paginada.util'
 import { Category } from '../../common/entities/Category.entity'
 
 @Injectable()
@@ -18,16 +17,12 @@ export class PaginateCategoryUsecase {
     private readonly authorizationService: AuthorizationService,
   ) {}
 
-  async exec(body: PaginateCategoryDto, user: User) {
+  async exec(user: User) {
     this.authorizationService.validate(user, this.roles)
-
-    const query = this.repository
-      .createQueryBuilder('category')
-      .select(['category.id', 'category.name'])
-
-    this.aplicarFiltros(query, body)
-
-    return await executaPaginacao(query, body)
+    return this.repository.find({
+      select: { id: true, name: true },
+      relations: ['products'],
+    })
   }
 
   private aplicarFiltros(
