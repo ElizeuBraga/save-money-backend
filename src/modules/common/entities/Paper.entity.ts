@@ -6,12 +6,14 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm'
 import { ulid } from 'ulid'
 import { Product } from './Product.entity'
+import { Investment } from './Investments.entity'
 
 @Entity()
 @Unique(['name'])
@@ -24,6 +26,9 @@ export class Paper extends BaseEntity {
 
   @ManyToOne(() => Product, (product) => product.papers, { nullable: false })
   product: Product
+
+  @OneToMany(() => Investment, (investment) => investment.bank)
+  investments: Investment[]
 
   @CreateDateColumn()
   createdAt: Date

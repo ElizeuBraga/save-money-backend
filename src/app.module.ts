@@ -13,6 +13,7 @@ import { CategoryModule } from './modules/categories/category.module'
 import { ProductModule } from './modules/products/product.module'
 import { PaperModule } from './modules/papers/paper.module'
 import { dataSourceFactory } from './modules/common/database/data-source.factory'
+import { InvestmentModule } from './modules/investments/investment.module'
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { dataSourceFactory } from './modules/common/database/data-source.factory
     CategoryModule,
     ProductModule,
     PaperModule,
+    InvestmentModule,
   ],
   controllers: [],
   providers: [

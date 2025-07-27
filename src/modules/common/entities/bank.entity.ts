@@ -5,11 +5,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm'
 import { ulid } from 'ulid'
+import { Investment } from './Investments.entity'
 
 @Entity()
 @Unique(['name'])
@@ -22,6 +24,9 @@ export class Bank extends BaseEntity {
 
   @Column()
   logo: string
+
+  @OneToMany(() => Investment, (investment) => investment.bank)
+  investments: Investment[]
 
   @CreateDateColumn()
   createdAt: Date

@@ -6,11 +6,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm'
 import { ulid } from 'ulid'
+import { Investment } from './Investments.entity'
 
 @Entity()
 @Unique(['email'])
@@ -23,6 +25,9 @@ export class User extends BaseEntity {
 
   @Column({ length: 255 })
   email: string
+
+  @OneToMany(() => Investment, (investment) => investment.bank)
+  investments: Investment[]
 
   @Exclude()
   @Column({ length: 255, nullable: true })
@@ -46,6 +51,8 @@ export class User extends BaseEntity {
     'product:create',
     'paper:read',
     'paper:create',
+    'investment:read',
+    'investment:create',
   ]
 
   @BeforeInsert()
