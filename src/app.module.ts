@@ -10,6 +10,8 @@ import { JwtAuthGuard } from './modules/auth/guard/jwt-auth.guard'
 import { BankModule } from './modules/banks/bank.module'
 import { DevelopModule } from './modules/develop/develop.module'
 import { CategoryModule } from './modules/categories/category.module'
+import { ProductModule } from './modules/products/product.module'
+import { PaperModule } from './modules/papers/paper.module'
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { CategoryModule } from './modules/categories/category.module'
     BankModule,
     DevelopModule,
     CategoryModule,
+    ProductModule,
+    PaperModule,
   ],
   controllers: [],
   providers: [

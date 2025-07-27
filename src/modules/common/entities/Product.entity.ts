@@ -5,25 +5,25 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm'
 import { ulid } from 'ulid'
-import { Product } from './Product.entity'
+import { Category } from './Category.entity'
 
 @Entity()
 @Unique(['name'])
-export class Category extends BaseEntity {
+export class Product extends BaseEntity {
   @PrimaryColumn({ length: 26 })
   id: string
 
   @Column({ length: 255 })
   name: string
 
-  @OneToMany(() => Product, (product) => product.category)
-  products: Product[]
+  @ManyToOne(() => Category, (category) => category.products)
+  category: Category
 
   @CreateDateColumn()
   createdAt: Date
