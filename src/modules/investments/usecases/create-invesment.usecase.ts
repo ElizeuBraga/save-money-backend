@@ -8,7 +8,7 @@ import { CreateInvestmentDto } from '../dto/create-investment.dto'
 import { Transactional } from 'typeorm-transactional'
 import { to } from '../../common/utils/to.util'
 import { changeError } from '../../common/utils/change-error.util'
-import { Investment } from '../../common/entities/Investments.entity'
+import { Investment } from '../../common/entities/Investment.entity'
 
 @Injectable()
 export class CreateInvesmentUsecase {

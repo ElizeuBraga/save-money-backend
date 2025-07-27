@@ -4,7 +4,7 @@ import { AuthorizationService } from 'src/modules/authorization/services/authori
 import { RoleEnum } from 'src/modules/common/types/enum'
 import { Repository } from 'typeorm'
 import { User } from '../../common/entities/user.entity'
-import { Investment } from '../../common/entities/Investments.entity'
+import { Investment } from '../../common/entities/Investment.entity'
 
 @Injectable()
 export class PaginateInvestmentUsecase {

@@ -13,7 +13,7 @@ import {
 } from 'typeorm'
 import { ulid } from 'ulid'
 import { Product } from './Product.entity'
-import { Investment } from './Investments.entity'
+import { Investment } from './Investment.entity'
 
 @Entity()
 @Unique(['name'])

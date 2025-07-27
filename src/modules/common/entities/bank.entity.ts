@@ -11,7 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { ulid } from 'ulid'
-import { Investment } from './Investments.entity'
+import { Investment } from './Investment.entity'
 
 @Entity()
 @Unique(['name'])
