@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer'
 import {
   BaseEntity,
   BeforeInsert,
@@ -13,20 +12,13 @@ import {
 import { ulid } from 'ulid'
 
 @Entity()
-@Unique(['email'])
-export class User extends BaseEntity {
+@Unique(['name'])
+export class Category extends BaseEntity {
   @PrimaryColumn({ length: 26 })
   id: string
 
   @Column({ length: 255 })
   name: string
-
-  @Column({ length: 255 })
-  email: string
-
-  @Exclude()
-  @Column({ length: 255, nullable: true })
-  password?: string
 
   @CreateDateColumn()
   createdAt: Date
@@ -36,15 +28,6 @@ export class User extends BaseEntity {
 
   @DeleteDateColumn()
   deletedAt: Date
-
-  roles = [
-    'bank:read',
-    'bank:create',
-    'category:read',
-    'category:create',
-    'paper:read',
-    'paper:create',
-  ]
 
   @BeforeInsert()
   generateId() {
