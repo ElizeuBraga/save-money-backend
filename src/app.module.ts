@@ -8,6 +8,7 @@ import jwtConfig from './config/jwt.config'
 import { AuthModule } from './modules/auth/auth.module'
 import { JwtAuthGuard } from './modules/auth/guard/jwt-auth.guard'
 import { BankModule } from './modules/banks/bank.module'
+import { DevelopModule } from './modules/develop/develop.module'
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { BankModule } from './modules/banks/bank.module'
     }),
     AuthModule,
     BankModule,
+    DevelopModule,
   ],
   controllers: [],
   providers: [
