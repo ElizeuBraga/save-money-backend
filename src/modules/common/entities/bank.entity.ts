@@ -20,6 +20,9 @@ export class Bank extends BaseEntity {
   @Column({ length: 255 })
   name: string
 
+  @Column()
+  logo: string
+
   @CreateDateColumn()
   createdAt: Date
 

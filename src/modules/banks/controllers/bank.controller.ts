@@ -4,7 +4,6 @@ import { PaginateBankUsecase } from '../usecases/get-all-bank.usecase'
 import { Bank } from '../../common/entities/bank.entity'
 import { PaginateBankDto } from '../dto/paginate-bank.dto'
 import { ApiOkResponsePaged } from '../../common/decorators/api-ok-response-paged.metadata'
-import { CreateBankResponse } from '../types'
 import { CreateBankDto } from '../dto/create-bank.dto'
 import { CreateBankUsecase } from '../usecases/create-bank.usecase'
 
