@@ -22,7 +22,7 @@ export class Paper extends BaseEntity {
   @Column({ length: 255 })
   name: string
 
-  @ManyToOne(() => Product, (product) => product.papers)
+  @ManyToOne(() => Product, (product) => product.papers, { nullable: false })
   product: Product
 
   @CreateDateColumn()

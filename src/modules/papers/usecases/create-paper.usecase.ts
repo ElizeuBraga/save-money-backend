@@ -24,7 +24,10 @@ export class CreatePaperUsecase {
   async exec(body: CreatePaperDto, user: User) {
     this.authorizationService.validate(user, this.roles)
 
-    const created = this.repository.create(body)
+    const created = this.repository.create({
+      name: body.name,
+      product: { id: body.productId },
+    })
     const [err] = await to(this.repository.save(created))
 
     if (err) {

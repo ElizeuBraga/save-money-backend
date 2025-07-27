@@ -24,7 +24,9 @@ export class Product extends BaseEntity {
   @Column({ length: 255 })
   name: string
 
-  @ManyToOne(() => Category, (category) => category.products)
+  @ManyToOne(() => Category, (category) => category.products, {
+    nullable: false,
+  })
   category: Category
 
   @OneToMany(() => Paper, (paper) => paper.product)
