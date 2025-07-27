@@ -6,6 +6,7 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
   Unique,
   UpdateDateColumn,
@@ -14,6 +15,7 @@ import { ulid } from 'ulid'
 import { Bank } from './bank.entity'
 import { Paper } from './Paper.entity'
 import { User } from './user.entity'
+import { InvestmentHistory } from './InvestmentHistory.entity'
 
 @Entity()
 @Unique(['bank', 'paper', 'user'])
@@ -29,6 +31,9 @@ export class Investment extends BaseEntity {
 
   @ManyToOne(() => User, (user) => user.investments, { nullable: false })
   user: User
+
+  @OneToMany(() => InvestmentHistory, (history) => history.investment)
+  history: InvestmentHistory[]
 
   @Column()
   price: number
