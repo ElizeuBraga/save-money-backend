@@ -1,13 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
 
-export class IdResponse {
-  @ApiProperty({
-    description: 'ID do objeto salvo',
-    type: 'string',
-  })
-  id: string | number
-}
-
 export class Paged<T> {
   @ApiProperty()
   items: T[]
