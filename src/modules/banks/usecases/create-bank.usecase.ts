@@ -6,6 +6,7 @@ import { Repository } from 'typeorm'
 import { Bank } from '../../common/entities/bank.entity'
 import { User } from '../../common/entities/user.entity'
 import { CreateBankDto } from '../dto/create-bank.dto'
+import { Transactional } from 'typeorm-transactional'
 
 @Injectable()
 export class CreateBankUsecase {
@@ -17,9 +18,11 @@ export class CreateBankUsecase {
     private readonly authorizationService: AuthorizationService,
   ) {}
 
+  @Transactional()
   async exec(body: CreateBankDto, user: User) {
     this.authorizationService.validate(user, this.roles)
 
-    return this.repository.save(body)
+    const bank = this.repository.create(body)
+    return this.repository.save(bank)
   }
 }

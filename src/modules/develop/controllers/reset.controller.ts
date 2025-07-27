@@ -1,30 +1,18 @@
-import { Controller, Get, Post } from '@nestjs/common'
-import { unlinkSync, existsSync } from 'fs'
-import { writeFile } from 'fs/promises'
+import { Controller, Post } from '@nestjs/common'
 import { Public } from '../../auth/utils/public.metadata'
+import { DataSource } from 'typeorm'
+import { InjectDataSource } from '@nestjs/typeorm'
 
 @Controller('reset')
 export class ResetController {
-  path: string
-  constructor() {
-    this.path = 'data/databaseTeste.sqlite'
-  }
-
-  @Public()
-  @Get()
-  alive() {
-    return existsSync(this.path)
-  }
+  constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
   @Public()
   @Post()
   async reset() {
     if (process.env.NODE_ENV == 'development') {
-      if (existsSync(this.path)) {
-        unlinkSync(this.path)
-      }
-      await writeFile(this.path, '')
-      return 'reseted'
+      await this.dataSource.dropDatabase()
+      await this.dataSource.synchronize()
     }
   }
 }

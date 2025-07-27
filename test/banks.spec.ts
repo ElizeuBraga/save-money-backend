@@ -18,4 +18,28 @@ describe('Banks', () => {
       .set('Authorization', `Bearer ${token}`)
       .expect(200)
   })
+
+  it('Create', async () => {
+    const banks = [
+      {
+        name: 'Nubank',
+        logo: 'logo.png',
+      },
+      {
+        name: 'C6',
+        logo: 'logo.png',
+      },
+      {
+        name: 'Inter',
+        logo: 'logo.png',
+      },
+    ]
+    for (const bank of banks) {
+      await request(app.getHttpServer())
+        .post('/banks')
+        .send({ name: bank.name, logo: bank.logo })
+        .set('Authorization', `Bearer ${token}`)
+        .expect(201)
+    }
+  })
 })
