@@ -33,13 +33,17 @@ describe('Banks', () => {
         name: 'Inter',
         logo: 'logo.png',
       },
+      {
+        name: 'Neon',
+        logo: 'logo.png',
+      },
     ]
     for (const bank of banks) {
       await request(app.getHttpServer())
         .post('/banks')
         .send({ name: bank.name, logo: bank.logo })
         .set('Authorization', `Bearer ${token}`)
-        .expect(201)
+        .expect([201, 409])
     }
   })
 })

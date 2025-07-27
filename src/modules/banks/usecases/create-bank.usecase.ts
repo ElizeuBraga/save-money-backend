@@ -7,6 +7,8 @@ import { Bank } from '../../common/entities/bank.entity'
 import { User } from '../../common/entities/user.entity'
 import { CreateBankDto } from '../dto/create-bank.dto'
 import { Transactional } from 'typeorm-transactional'
+import { to } from '../../common/utils/to.util'
+import { changeError } from '../../common/utils/change-error.util'
 
 @Injectable()
 export class CreateBankUsecase {
@@ -23,6 +25,10 @@ export class CreateBankUsecase {
     this.authorizationService.validate(user, this.roles)
 
     const bank = this.repository.create(body)
-    return this.repository.save(bank)
+    const [err] = await to(this.repository.save(bank))
+
+    if (err) {
+      changeError(err)
+    }
   }
 }

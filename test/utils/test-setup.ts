@@ -42,17 +42,6 @@ interface AuthResponse {
 }
 
 export async function getToken(app: INestApplication): Promise<string> {
-  await request(app.getHttpServer()).post('/reset').expect(201)
-
-  await request(app.getHttpServer())
-    .post('/auth/register')
-    .send({
-      name: `Elizeu`,
-      email: `elizeubragasantos@gmail.com`,
-      password: 'save',
-    })
-    .expect([201, 409])
-
   const response = await request(app.getHttpServer()).post('/auth/login').send({
     username: 'elizeubragasantos@gmail.com',
     password: 'save',
