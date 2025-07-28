@@ -26,6 +26,20 @@ export class AuthorizationService {
     return this.request.user.id
   }
 
+  validateUserPermission(roles: (string | RoleEnum)[]) {
+    if (!this.request.user.id) {
+      throw new UnauthorizedException('User not authenticated')
+    }
+
+    const can = this.can(this.request.user, roles)
+
+    if (!can) {
+      throw new UnauthorizedException()
+    }
+
+    return this.request.user.id
+  }
+
   can(user: User, roles: string[]): boolean {
     return (
       !!user &&

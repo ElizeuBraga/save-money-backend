@@ -16,7 +16,7 @@ export class PaginateInvestmentUsecase {
   ) {}
 
   async exec() {
-    const userId = this.authorizationService.validate(this.roles)
+    const userId = this.authorizationService.validateUserPermission(this.roles)
 
     return this.repository.find({
       select: {
