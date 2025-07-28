@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Put,
-  Request,
-} from '@nestjs/common'
-import { User } from 'src/modules/common/entities/user.entity'
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
 import { PaginateInvestmentUsecase } from '../usecases/paginate-investment.usecase'
 import { CreateInvestmentDto } from '../dto/create-investment.dto'
 import { CreateInvesmentUsecase } from '../usecases/create-invesment.usecase'
@@ -26,33 +17,28 @@ export class InvestmentController {
   ) {}
 
   @Post()
-  async create(
-    @Request() { user }: { user: User },
-    @Body() body: CreateInvestmentDto,
-  ) {
-    return await this.createInvesmentUsecase.exec(body, user)
+  async create(@Body() body: CreateInvestmentDto) {
+    return await this.createInvesmentUsecase.exec(body)
   }
 
   @Put(':id')
   async updatePrice(
     @Param('id') id: string,
-    @Request() { user }: { user: User },
     @Body() body: UpdatePriceInvestmentDto,
   ) {
-    return await this.updatePriceInvesmentUsecase.exec(id, body, user)
+    return await this.updatePriceInvesmentUsecase.exec(id, body)
   }
 
   @Post(':id/contribution')
   async contribution(
     @Param('id') id: string,
-    @Request() { user }: { user: User },
     @Body() body: ContributionInvestmentDto,
   ) {
-    return await this.contributionInvesmentUsecase.exec(id, body, user)
+    return await this.contributionInvesmentUsecase.exec(id, body)
   }
 
   @Get()
-  async paginate(@Request() { user }: { user: User }) {
-    return this.paginateInvestmentUsecase.exec(user)
+  async paginate() {
+    return this.paginateInvestmentUsecase.exec()
   }
 }

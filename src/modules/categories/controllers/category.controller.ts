@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common'
-import { User } from 'src/modules/common/entities/user.entity'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 import { PaginateCategoryUsecase } from '../usecases/paginate-category.usecase'
 import { CreateCategoryDto } from '../dto/create-category.dto'
 import { CreateCategoryUsecase } from '../usecases/create-category.usecase'
@@ -12,15 +11,12 @@ export class CategoryController {
   ) {}
 
   @Post()
-  async create(
-    @Request() { user }: { user: User },
-    @Body() body: CreateCategoryDto,
-  ) {
-    return await this.createCategoryUsecase.exec(body, user)
+  async create(@Body() body: CreateCategoryDto) {
+    return await this.createCategoryUsecase.exec(body)
   }
 
   @Get()
-  async paginate(@Request() { user }: { user: User }) {
-    return this.paginateCategoryUsecase.exec(user)
+  async paginate() {
+    return this.paginateCategoryUsecase.exec()
   }
 }

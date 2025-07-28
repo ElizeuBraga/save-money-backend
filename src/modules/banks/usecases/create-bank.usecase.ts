@@ -4,7 +4,6 @@ import { AuthorizationService } from 'src/modules/authorization/services/authori
 import { RoleEnum } from 'src/modules/common/types/enum'
 import { Repository } from 'typeorm'
 import { Bank } from '../../common/entities/bank.entity'
-import { User } from '../../common/entities/user.entity'
 import { CreateBankDto } from '../dto/create-bank.dto'
 import { Transactional } from 'typeorm-transactional'
 import { to } from '../../common/utils/to.util'
@@ -21,8 +20,8 @@ export class CreateBankUsecase {
   ) {}
 
   @Transactional()
-  async exec(body: CreateBankDto, user: User) {
-    this.authorizationService.validate(user, this.roles)
+  async exec(body: CreateBankDto) {
+    this.authorizationService.validate(this.roles)
 
     const bank = this.repository.create(body)
     const [err] = await to(this.repository.save(bank))

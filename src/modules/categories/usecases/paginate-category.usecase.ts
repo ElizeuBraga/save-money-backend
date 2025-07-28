@@ -4,7 +4,6 @@ import { AuthorizationService } from 'src/modules/authorization/services/authori
 import { RoleEnum } from 'src/modules/common/types/enum'
 import { Repository, SelectQueryBuilder } from 'typeorm'
 import { PaginateCategoryDto } from '../dto/paginate-category.dto'
-import { User } from '../../common/entities/user.entity'
 import { Category } from '../../common/entities/Category.entity'
 
 @Injectable()
@@ -17,8 +16,8 @@ export class PaginateCategoryUsecase {
     private readonly authorizationService: AuthorizationService,
   ) {}
 
-  async exec(user: User) {
-    this.authorizationService.validate(user, this.roles)
+  async exec() {
+    this.authorizationService.validate(this.roles)
     return this.repository.find({
       select: { id: true, name: true },
       relations: ['products'],

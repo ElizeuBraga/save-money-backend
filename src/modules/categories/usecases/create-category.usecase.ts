@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { AuthorizationService } from 'src/modules/authorization/services/authorization.service'
 import { RoleEnum } from 'src/modules/common/types/enum'
 import { Repository } from 'typeorm'
-import { User } from '../../common/entities/user.entity'
 import { CreateCategoryDto } from '../dto/create-category.dto'
 import { Transactional } from 'typeorm-transactional'
 import { to } from '../../common/utils/to.util'
@@ -21,8 +20,8 @@ export class CreateCategoryUsecase {
   ) {}
 
   @Transactional()
-  async exec(body: CreateCategoryDto, user: User) {
-    this.authorizationService.validate(user, this.roles)
+  async exec(body: CreateCategoryDto) {
+    this.authorizationService.validate(this.roles)
 
     const created = this.repository.create(body)
     const [err] = await to(this.repository.save(created))

@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common'
-import { User } from 'src/modules/common/entities/user.entity'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 import { PaginateBankUsecase } from '../usecases/get-all-bank.usecase'
 import { CreateBankDto } from '../dto/create-bank.dto'
 import { CreateBankUsecase } from '../usecases/create-bank.usecase'
@@ -12,15 +11,12 @@ export class BankController {
   ) {}
 
   @Post()
-  async create(
-    @Request() { user }: { user: User },
-    @Body() body: CreateBankDto,
-  ) {
-    return await this.createBankUsecase.exec(body, user)
+  async create(@Body() body: CreateBankDto) {
+    return await this.createBankUsecase.exec(body)
   }
 
   @Get()
-  async paginate(@Request() { user }: { user: User }) {
-    return this.paginateBankUsecase.exec(user)
+  async paginate() {
+    return this.paginateBankUsecase.exec()
   }
 }

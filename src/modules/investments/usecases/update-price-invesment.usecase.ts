@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { AuthorizationService } from 'src/modules/authorization/services/authorization.service'
 import { RoleEnum } from 'src/modules/common/types/enum'
 import { Repository } from 'typeorm'
-import { User } from '../../common/entities/user.entity'
 import { Transactional } from 'typeorm-transactional'
 import { to } from '../../common/utils/to.util'
 import { changeError } from '../../common/utils/change-error.util'
@@ -25,8 +24,8 @@ export class UpdatePriceInvesmentUsecase {
   ) {}
 
   @Transactional()
-  async exec(id: string, body: UpdatePriceInvestmentDto, user: User) {
-    this.authorizationService.validate(user, this.roles)
+  async exec(id: string, body: UpdatePriceInvestmentDto) {
+    this.authorizationService.validate(this.roles)
 
     const [err] = await to(
       this.repository.save({

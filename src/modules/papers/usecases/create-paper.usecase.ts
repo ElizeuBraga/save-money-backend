@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { AuthorizationService } from 'src/modules/authorization/services/authorization.service'
 import { RoleEnum } from 'src/modules/common/types/enum'
 import { Repository } from 'typeorm'
-import { User } from '../../common/entities/user.entity'
 import { CreatePaperDto } from '../dto/create-paper.dto'
 import { Transactional } from 'typeorm-transactional'
 import { to } from '../../common/utils/to.util'
@@ -21,8 +20,8 @@ export class CreatePaperUsecase {
   ) {}
 
   @Transactional()
-  async exec(body: CreatePaperDto, user: User) {
-    this.authorizationService.validate(user, this.roles)
+  async exec(body: CreatePaperDto) {
+    this.authorizationService.validate(this.roles)
 
     const created = this.repository.create({
       name: body.name,

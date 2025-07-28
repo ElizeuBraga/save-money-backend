@@ -1,15 +1,29 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import {
+  Inject,
+  Injectable,
+  Scope,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { RoleEnum } from '../../common/types/enum'
 import { User } from '../../common/entities/user.entity'
+import { REQUEST } from '@nestjs/core'
+import { TokenPayload } from '../../auth/types'
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class AuthorizationService {
-  validate(user: User, roles: (string | RoleEnum)[]) {
-    const can = this.can(user, roles)
+  constructor(@Inject(REQUEST) private readonly request: TokenPayload) {}
+  validate(roles: (string | RoleEnum)[]) {
+    if (!this.request.user.id) {
+      throw new UnauthorizedException('User not authenticated')
+    }
+
+    const can = this.can(this.request.user, roles)
 
     if (!can) {
       throw new UnauthorizedException()
     }
+
+    return this.request.user.id
   }
 
   can(user: User, roles: string[]): boolean {

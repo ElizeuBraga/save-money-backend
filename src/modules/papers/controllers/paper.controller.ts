@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common'
-import { User } from 'src/modules/common/entities/user.entity'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 import { PaginatePaperUsecase } from '../usecases/paginate-paper.usecase'
 import { CreatePaperDto } from '../dto/create-paper.dto'
 import { CreatePaperUsecase } from '../usecases/create-paper.usecase'
@@ -12,15 +11,12 @@ export class PaperController {
   ) {}
 
   @Post()
-  async create(
-    @Request() { user }: { user: User },
-    @Body() body: CreatePaperDto,
-  ) {
-    return await this.createCategoryUsecase.exec(body, user)
+  async create(@Body() body: CreatePaperDto) {
+    return await this.createCategoryUsecase.exec(body)
   }
 
   @Get()
-  async paginate(@Request() { user }: { user: User }) {
-    return this.paginateCategoryUsecase.exec(user)
+  async paginate() {
+    return this.paginateCategoryUsecase.exec()
   }
 }
