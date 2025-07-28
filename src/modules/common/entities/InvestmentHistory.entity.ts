@@ -26,7 +26,7 @@ export class InvestmentHistory extends BaseEntity {
   price: number
 
   @Column({ nullable: false, type: 'varchar', length: 64 })
-  action: number
+  action: string
 
   @CreateDateColumn()
   createdAt: Date

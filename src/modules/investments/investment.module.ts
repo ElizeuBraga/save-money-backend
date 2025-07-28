@@ -5,9 +5,13 @@ import { CONTROLLERS } from './controllers'
 import { SERVICES } from './services'
 import { USE_CASES } from './usecases'
 import { Investment } from '../common/entities/Investment.entity'
+import { InvestmentHistory } from '../common/entities/InvestmentHistory.entity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Investment]), AuthorizationModule],
+  imports: [
+    TypeOrmModule.forFeature([Investment, InvestmentHistory]),
+    AuthorizationModule,
+  ],
   controllers: [...CONTROLLERS],
   providers: [...SERVICES, ...USE_CASES],
 })

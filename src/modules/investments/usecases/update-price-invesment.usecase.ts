@@ -4,17 +4,17 @@ import { AuthorizationService } from 'src/modules/authorization/services/authori
 import { RoleEnum } from 'src/modules/common/types/enum'
 import { Repository } from 'typeorm'
 import { User } from '../../common/entities/user.entity'
-import { CreateInvestmentDto } from '../dto/create-investment.dto'
 import { Transactional } from 'typeorm-transactional'
 import { to } from '../../common/utils/to.util'
 import { changeError } from '../../common/utils/change-error.util'
 import { Investment } from '../../common/entities/Investment.entity'
 import { InvestmentHistory } from '../../common/entities/InvestmentHistory.entity'
 import { InvestmentActionEnum } from '../types/enum'
+import { UpdatePriceInvestmentDto } from '../dto/update-price-investment.dto'
 
 @Injectable()
-export class CreateInvesmentUsecase {
-  roles = [RoleEnum.INVESTMENT_CREATE]
+export class UpdatePriceInvesmentUsecase {
+  roles = [RoleEnum.INVESTMENT_UPDATE]
 
   constructor(
     @InjectRepository(Investment)
@@ -25,33 +25,28 @@ export class CreateInvesmentUsecase {
   ) {}
 
   @Transactional()
-  async exec(body: CreateInvestmentDto, user: User) {
+  async exec(id: string, body: UpdatePriceInvestmentDto, user: User) {
     this.authorizationService.validate(user, this.roles)
 
-    const created = this.repository.create({
-      paper: { id: body.paperId },
-      bank: { id: body.bankId },
-      user: { id: user.id },
-      price: body.price,
-    })
-
-    const [err] = await to(this.repository.save(created))
+    const [err] = await to(
+      this.repository.save({
+        id: id,
+        price: body.price,
+      }),
+    )
 
     if (err) {
       changeError(err)
     }
 
-    await this.createHistory(body, created)
+    await this.createHistory(id, body)
   }
 
-  private async createHistory(
-    body: CreateInvestmentDto,
-    investment: Investment,
-  ) {
+  private async createHistory(id: string, body: UpdatePriceInvestmentDto) {
     const created = this.investmentHistoryRepository.create({
-      investment: { id: investment.id },
+      investment: { id },
       price: body.price,
-      action: InvestmentActionEnum.CREATE,
+      action: InvestmentActionEnum.UPDATE_PRICE,
     })
 
     return await to(this.investmentHistoryRepository.save(created))

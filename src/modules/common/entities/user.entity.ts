@@ -53,6 +53,7 @@ export class User extends BaseEntity {
     'paper:create',
     'investment:read',
     'investment:create',
+    'investment:update',
   ]
 
   @BeforeInsert()
