@@ -20,7 +20,23 @@ export class PaginateInvestmentUsecase {
     this.authorizationService.validate(user, this.roles)
 
     return this.repository.find({
-      select: { id: true, price: true },
+      select: {
+        id: true,
+        price: true,
+        paper: {
+          id: true,
+          name: true,
+        },
+        history: {
+          price: true,
+          action: true,
+          createdAt: true,
+        },
+      },
+      relations: ['paper', 'history'],
+      where: {
+        user: { id: user.id },
+      },
     })
   }
 }
