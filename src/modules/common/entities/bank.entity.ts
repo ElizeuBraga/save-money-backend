@@ -28,6 +28,8 @@ export class Bank extends BaseEntity {
   @OneToMany(() => Investment, (investment) => investment.bank)
   investments: Investment[]
 
+  percent?: number
+
   @CreateDateColumn()
   createdAt: Date
 

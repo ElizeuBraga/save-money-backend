@@ -18,8 +18,37 @@ export class PaginateBankUsecase {
   async exec() {
     this.authorizationService.validate(this.roles)
 
-    return this.repository.find({
-      select: { id: true, name: true },
+    const banks = await this.repository.find({
+      select: {
+        id: true,
+        name: true,
+        investments: { id: true, price: true, paper: { id: true, name: true } },
+      },
+      relations: ['investments.paper'],
     })
+
+    const total = this.totalInvested(banks)
+
+    for (const bank of banks) {
+      const percent = (this.totalInvestedByBank(bank) * 100) / total
+      bank.percent = parseFloat(percent.toFixed(2))
+    }
+
+    return banks
+  }
+
+  private totalInvested(banks: Bank[]) {
+    return banks
+      .map((bank) => bank.investments)
+      .map((investment) => investment)
+      .flat()
+      .map((investment) => investment.price)
+      .reduce((acc, curr) => acc + curr, 0)
+  }
+
+  private totalInvestedByBank(bank: Bank) {
+    return bank.investments
+      .map((investment) => investment.price)
+      .reduce((acc, curr) => acc + curr, 0)
   }
 }
