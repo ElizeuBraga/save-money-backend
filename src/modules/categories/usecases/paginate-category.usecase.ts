@@ -31,6 +31,7 @@ export class PaginateCategoryUsecase {
           name: true,
           papers: {
             id: true,
+            name: true,
             investments: {
               id: true,
               price: true,
