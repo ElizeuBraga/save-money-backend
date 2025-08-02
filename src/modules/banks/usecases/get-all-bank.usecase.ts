@@ -30,8 +30,9 @@ export class PaginateBankUsecase {
     const total = this.totalInvested(banks)
 
     for (const bank of banks) {
-      const percent = (this.totalInvestedByBank(bank) * 100) / total
-      bank.percent = parseFloat(percent.toFixed(2))
+      bank.totalInvested = this.totalInvestedByBank(bank)
+      const percent = (bank.totalInvested * 100) / total
+      bank.percentInvested = parseFloat(percent.toFixed(2))
     }
 
     return banks

@@ -12,6 +12,7 @@ import {
 } from 'typeorm'
 import { ulid } from 'ulid'
 import { Investment } from './Investment.entity'
+import { Paper } from './Paper.entity'
 
 @Entity()
 @Unique(['name'])
@@ -28,7 +29,11 @@ export class Bank extends BaseEntity {
   @OneToMany(() => Investment, (investment) => investment.bank)
   investments: Investment[]
 
-  percent?: number
+  percentInvested?: number
+
+  totalInvested?: number
+
+  papers?: Paper[]
 
   @CreateDateColumn()
   createdAt: Date
