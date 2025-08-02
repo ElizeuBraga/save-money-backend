@@ -27,8 +27,12 @@ export class Paper extends BaseEntity {
   @ManyToOne(() => Product, (product) => product.papers, { nullable: false })
   product: Product
 
-  @OneToMany(() => Investment, (investment) => investment.bank)
+  @OneToMany(() => Investment, (investment) => investment.paper)
   investments: Investment[]
+
+  percentInvested?: number
+
+  totalInvested?: number
 
   @CreateDateColumn()
   createdAt: Date

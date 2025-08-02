@@ -12,6 +12,7 @@ import {
 } from 'typeorm'
 import { ulid } from 'ulid'
 import { Product } from './Product.entity'
+import { Investment } from './Investment.entity'
 
 @Entity()
 @Unique(['name'])
@@ -24,6 +25,12 @@ export class Category extends BaseEntity {
 
   @OneToMany(() => Product, (product) => product.category)
   products: Product[]
+
+  investments?: Investment[]
+
+  percentInvested?: number
+
+  totalInvested?: number
 
   @CreateDateColumn()
   createdAt: Date

@@ -29,6 +29,10 @@ export class Product extends BaseEntity {
   })
   category: Category
 
+  percentInvested?: number
+
+  totalInvested?: number
+
   @OneToMany(() => Paper, (paper) => paper.product)
   papers: Paper[]
 
