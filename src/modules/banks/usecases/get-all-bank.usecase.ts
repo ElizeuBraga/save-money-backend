@@ -4,6 +4,8 @@ import { AuthorizationService } from 'src/modules/authorization/services/authori
 import { RoleEnum } from 'src/modules/common/types/enum'
 import { Repository } from 'typeorm'
 import { Bank } from '../../common/entities/bank.entity'
+import sumBy from '../../common/utils/sum-by.util'
+import percent from '../../common/utils/percent.util.'
 
 @Injectable()
 export class PaginateBankUsecase {
@@ -27,29 +29,14 @@ export class PaginateBankUsecase {
       relations: ['investments.paper'],
     })
 
-    const total = this.totalInvested(banks)
+    const investments = banks.flatMap((bank) => bank.investments)
+    const totalInvested = sumBy(investments, 'price')
 
     for (const bank of banks) {
-      bank.totalInvested = this.totalInvestedByBank(bank)
-      const percent = (bank.totalInvested * 100) / total
-      bank.percentInvested = parseFloat(percent.toFixed(2))
+      bank.totalInvested = sumBy(bank.investments, 'price')
+      bank.percentInvested = percent(bank.totalInvested, totalInvested)
     }
 
     return banks
-  }
-
-  private totalInvested(banks: Bank[]) {
-    return banks
-      .map((bank) => bank.investments)
-      .map((investment) => investment)
-      .flat()
-      .map((investment) => investment.price)
-      .reduce((acc, curr) => acc + curr, 0)
-  }
-
-  private totalInvestedByBank(bank: Bank) {
-    return bank.investments
-      .map((investment) => investment.price)
-      .reduce((acc, curr) => acc + curr, 0)
   }
 }
