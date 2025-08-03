@@ -35,7 +35,7 @@ export class Investment extends BaseEntity {
   @OneToMany(() => InvestmentHistory, (history) => history.investment)
   history: InvestmentHistory[]
 
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number
 
   @CreateDateColumn()
