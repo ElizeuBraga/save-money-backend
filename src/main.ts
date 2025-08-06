@@ -10,7 +10,10 @@ async function bootstrap() {
 
   app.setGlobalPrefix(appPrefix)
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
-  app.enableCors()
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
 
   const config = new DocumentBuilder()
     .setTitle('Save Money')
