@@ -4,6 +4,7 @@ export enum RoleEnum {
 
   BANK_READ = 'bank:read',
   BANK_CREATE = 'bank:create',
+  BANK_UPDATE = 'bank:update',
 
   CATEGORY_READ = 'category:read',
   CATEGORY_CREATE = 'category:create',

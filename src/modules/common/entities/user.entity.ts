@@ -45,6 +45,7 @@ export class User extends BaseEntity {
   roles = [
     'bank:read',
     'bank:create',
+    'bank:update',
     'category:read',
     'category:create',
     'product:read',
