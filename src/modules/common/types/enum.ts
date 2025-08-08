@@ -8,6 +8,7 @@ export enum RoleEnum {
 
   CATEGORY_READ = 'category:read',
   CATEGORY_CREATE = 'category:create',
+  CATEGORY_UPDATE = 'category:update',
 
   PRODUCT_READ = 'product:read',
   PRODUCT_CREATE = 'product:create',
