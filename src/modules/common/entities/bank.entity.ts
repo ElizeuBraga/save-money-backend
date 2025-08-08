@@ -23,8 +23,8 @@ export class Bank extends BaseEntity {
   @Column({ length: 255 })
   name: string
 
-  @Column()
-  logo: string
+  @Column({ nullable: true })
+  logo?: string
 
   @OneToMany(() => Investment, (investment) => investment.bank)
   investments: Investment[]

@@ -14,8 +14,14 @@ export function changeError(
   }
 
   if (err instanceof QueryFailedError) {
-    if (err.driverError.code === 'SQLITE_CONSTRAINT') {
+    if (err.driverError.message.includes('UNIQUE')) {
       throw new ConflictException(exists || 'Registro já existe')
+    }
+
+    if (err.driverError.message.includes('NOT NULL')) {
+      throw new ConflictException(
+        exists || 'Algum dado obrigatório não foi enviado',
+      )
     }
     throw err
   }
