@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AuthorizationService } from 'src/modules/authorization/services/authorization.service'
 import { RoleEnum } from 'src/modules/common/types/enum'
-import { Not, Repository, SelectQueryBuilder } from 'typeorm'
+import { Repository } from 'typeorm'
 import { PaginateCategoryDto } from '../dto/paginate-category.dto'
 import { Category } from '../../common/entities/Category.entity'
 import sumBy from 'src/modules/common/utils/sum-by.util'
@@ -19,7 +19,7 @@ export class PaginateCategoryUsecase {
     private readonly authorizationService: AuthorizationService,
   ) {}
 
-  async exec() {
+  async exec(body: PaginateCategoryDto) {
     this.authorizationService.validate(this.roles)
 
     const categories = await this.repository.find({
@@ -39,22 +39,29 @@ export class PaginateCategoryUsecase {
           },
         },
       },
-      relations: ['products.papers.investments.paper.product.category'],
+      relations: body.onlyCategories
+        ? []
+        : ['products.papers.investments.paper.product.category'],
     })
 
-    const totalInvestments = sumBy(this.filterInvestments(categories), 'price')
-
-    for (const category of categories) {
-      const investments = this.filterInvestmentsByCategory(category)
-      category.totalInvested = sumBy(investments, 'price')
-      category.percentInvested = percent(
-        category.totalInvested,
-        totalInvestments,
+    if (!body.onlyCategories) {
+      const totalInvestments = sumBy(
+        this.filterInvestments(categories),
+        'price',
       )
 
-      for (const product of category.products) {
-        const investments = this.filterInvestmentsByProduct(product)
-        product.totalInvested = sumBy(investments, 'price')
+      for (const category of categories) {
+        const investments = this.filterInvestmentsByCategory(category)
+        category.totalInvested = sumBy(investments, 'price')
+        category.percentInvested = percent(
+          category.totalInvested,
+          totalInvestments,
+        )
+
+        for (const product of category.products) {
+          const investments = this.filterInvestmentsByProduct(product)
+          product.totalInvested = sumBy(investments, 'price')
+        }
       }
     }
 

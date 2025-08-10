@@ -12,6 +12,7 @@ export enum RoleEnum {
 
   PRODUCT_READ = 'product:read',
   PRODUCT_CREATE = 'product:create',
+  PRODUCT_UPDATE = 'product:update',
 
   PAPER_READ = 'paper:read',
   PAPER_CREATE = 'paper:create',

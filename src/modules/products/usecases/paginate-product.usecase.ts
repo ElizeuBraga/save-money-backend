@@ -6,6 +6,7 @@ import { Repository } from 'typeorm'
 import { Product } from '../../common/entities/Product.entity'
 import sumBy from '../../common/utils/sum-by.util'
 import percent from '../../common/utils/percent.util.'
+import { PaginateProductDto } from '../dto/paginate-product.dto'
 
 @Injectable()
 export class PaginateProductUsecase {
@@ -17,7 +18,7 @@ export class PaginateProductUsecase {
     private readonly authorizationService: AuthorizationService,
   ) {}
 
-  async exec() {
+  async exec(body: PaginateProductDto) {
     this.authorizationService.validate(this.roles)
 
     const products = await this.repository.find({
@@ -33,17 +34,22 @@ export class PaginateProductUsecase {
           },
         },
       },
-      relations: ['papers.investments'],
+      relations: body.onlyProducts ? [] : ['papers.investments', 'category'],
     })
 
-    const totalInvestments = sumBy(this.filterInvestments(products), 'price')
-    for (const product of products) {
-      const investments = this.filterInvestmentsByProduct(product)
-      product.totalInvested = sumBy(investments, 'price')
-      product.percentInvested = percent(product.totalInvested, totalInvestments)
+    if (!body.onlyProducts) {
+      const totalInvestments = sumBy(this.filterInvestments(products), 'price')
+      for (const product of products) {
+        const investments = this.filterInvestmentsByProduct(product)
+        product.totalInvested = sumBy(investments, 'price')
+        product.percentInvested = percent(
+          product.totalInvested,
+          totalInvestments,
+        )
 
-      for (const paper of product.papers) {
-        paper.totalInvested = sumBy(paper.investments, 'price')
+        for (const paper of product.papers) {
+          paper.totalInvested = sumBy(paper.investments, 'price')
+        }
       }
     }
 

@@ -8,7 +8,7 @@ export class PaginatorDto {
   @Transform(({ value }) => {
     return parseInt(value, 10) || 1
   })
-  page: number
+  page?: number
 
   @IsInt()
   @Min(1)
@@ -17,5 +17,5 @@ export class PaginatorDto {
   @Transform(({ value }) => {
     return parseInt(value, 10) || 15
   })
-  perPage: number
+  perPage?: number
 }
