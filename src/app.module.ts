@@ -7,11 +7,7 @@ import databaseConfig from './config/database.config'
 import jwtConfig from './config/jwt.config'
 import { AuthModule } from './modules/auth/auth.module'
 import { JwtAuthGuard } from './modules/auth/guard/jwt-auth.guard'
-import { BankModule } from './modules/banks/bank.module'
 import { DevelopModule } from './modules/develop/develop.module'
-import { CategoryModule } from './modules/categories/category.module'
-import { ProductModule } from './modules/products/product.module'
-import { PaperModule } from './modules/papers/paper.module'
 import { dataSourceFactory } from './modules/common/database/data-source.factory'
 import { InvestmentModule } from './modules/investments/investment.module'
 
@@ -34,11 +30,7 @@ import { InvestmentModule } from './modules/investments/investment.module'
       throttlers: [{ ttl: 0, limit: 0 }],
     }),
     AuthModule,
-    BankModule,
     DevelopModule,
-    CategoryModule,
-    ProductModule,
-    PaperModule,
     InvestmentModule,
   ],
   controllers: [],
