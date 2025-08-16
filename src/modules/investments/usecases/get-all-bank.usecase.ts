@@ -26,7 +26,7 @@ export class PaginateBankUsecase {
         name: true,
         investments: { id: true, price: true, paper: { id: true, name: true } },
       },
-      relations: ['investments.paper', 'investments.bank'],
+      relations: ['investments.paper'],
     })
 
     const investments = banks.flatMap((bank) => bank.investments)
