@@ -22,7 +22,14 @@ export class GetPapersUsecase {
       select: {
         id: true,
         name: true,
+        product: {
+          id: true,
+          category: {
+            id: true,
+          },
+        },
       },
+      relations: ['product.category'],
     })
   }
 }
