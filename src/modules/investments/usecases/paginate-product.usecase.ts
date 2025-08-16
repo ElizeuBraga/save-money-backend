@@ -34,23 +34,14 @@ export class PaginateProductUsecase {
           },
         },
       },
-      relations: body.onlyProducts ? [] : ['papers.investments', 'category'],
+      relations: ['papers.investments.paper'],
     })
 
-    if (!body.onlyProducts) {
-      const totalInvestments = sumBy(this.filterInvestments(products), 'price')
-      for (const product of products) {
-        const investments = this.filterInvestmentsByProduct(product)
-        product.totalInvested = sumBy(investments, 'price')
-        product.percentInvested = percent(
-          product.totalInvested,
-          totalInvestments,
-        )
-
-        for (const paper of product.papers) {
-          paper.totalInvested = sumBy(paper.investments, 'price')
-        }
-      }
+    const totalInvestments = sumBy(this.filterInvestments(products), 'price')
+    for (const product of products) {
+      product.investments = this.filterInvestmentsByProduct(product)
+      product.totalInvested = sumBy(product.investments, 'price')
+      product.percentInvested = percent(product.totalInvested, totalInvestments)
     }
 
     return products

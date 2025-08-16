@@ -14,6 +14,7 @@ import {
 import { ulid } from 'ulid'
 import { Category } from './Category.entity'
 import { Paper } from './Paper.entity'
+import { Investment } from './Investment.entity'
 
 @Entity()
 @Unique(['name'])
@@ -32,6 +33,9 @@ export class Product extends BaseEntity {
   percentInvested?: number
 
   totalInvested?: number
+
+  @OneToMany(() => Investment, (investment) => investment.paper)
+  investments: Investment[]
 
   @OneToMany(() => Paper, (paper) => paper.product)
   papers: Paper[]
