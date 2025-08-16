@@ -13,6 +13,7 @@ import { CreatePaperUsecase } from './create-paper.usecase'
 import { PaginateProductUsecase } from './paginate-product.usecase'
 import { CreateProductUsecase } from './create-product.usecase'
 import { UpdateProductUsecase } from './update-product.usecase'
+import { GetBanksUsecase } from './get-banks.usecase'
 
 export const USE_CASES = [
   PaginateInvestmentUsecase,
@@ -30,4 +31,5 @@ export const USE_CASES = [
   PaginateProductUsecase,
   CreateProductUsecase,
   UpdateProductUsecase,
+  GetBanksUsecase,
 ]
