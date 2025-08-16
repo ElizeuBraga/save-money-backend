@@ -4,6 +4,7 @@ import { CreatePaperDto } from '../dto/create-paper.dto'
 import { CreatePaperUsecase } from '../usecases/create-paper.usecase'
 import { UpdatePaperDto } from '../dto/update-paper.dto'
 import { UpdatePaperUsecase } from '../usecases/update-paper.usecase'
+import { GetPapersUsecase } from '../usecases/get-papers.usecase'
 
 @Controller('papers')
 export class PaperController {
@@ -11,6 +12,7 @@ export class PaperController {
     private readonly paginateCategoryUsecase: PaginatePaperUsecase,
     private readonly createCategoryUsecase: CreatePaperUsecase,
     private readonly updatePaperUsecase: UpdatePaperUsecase,
+    private readonly getPapersUsecase: GetPapersUsecase,
   ) {}
 
   @Post()
@@ -26,5 +28,10 @@ export class PaperController {
   @Get()
   async paginate() {
     return this.paginateCategoryUsecase.exec()
+  }
+
+  @Get('/list')
+  async getPapers() {
+    return this.getPapersUsecase.exec()
   }
 }
