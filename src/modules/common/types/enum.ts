@@ -16,6 +16,7 @@ export enum RoleEnum {
 
   PAPER_READ = 'paper:read',
   PAPER_CREATE = 'paper:create',
+  PAPER_UPDATE = 'paper:update',
 
   INVESTMENT_READ = 'investment:read',
   INVESTMENT_CREATE = 'investment:create',
