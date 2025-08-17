@@ -4,6 +4,7 @@ import { CreateCategoryDto } from '../dto/create-category.dto'
 import { CreateCategoryUsecase } from '../usecases/create-category.usecase'
 import { UpdateCategoryDto } from '../dto/update-category.dto'
 import { UpdateCategoryUsecase } from '../usecases/update-category.usecase'
+import { GetCategoriesUsecase } from '../usecases/get-categories.usecase'
 
 @Controller('categories')
 export class CategoryController {
@@ -11,6 +12,7 @@ export class CategoryController {
     private readonly paginateCategoryUsecase: PaginateCategoryUsecase,
     private readonly createCategoryUsecase: CreateCategoryUsecase,
     private readonly updateCategoryUsecase: UpdateCategoryUsecase,
+    private readonly getCategoriesUsecase: GetCategoriesUsecase,
   ) {}
 
   @Post()
@@ -26,5 +28,10 @@ export class CategoryController {
   @Get()
   async paginate() {
     return this.paginateCategoryUsecase.exec()
+  }
+
+  @Get('/list')
+  async getCategories() {
+    return this.getCategoriesUsecase.exec()
   }
 }
