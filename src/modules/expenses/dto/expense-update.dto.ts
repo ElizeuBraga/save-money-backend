@@ -1,7 +1,7 @@
 import { IsString, MaxLength, MinLength } from 'class-validator'
-import { CreateExpenseDto } from './create-expense.dto'
+import { ExpenseCreateDto } from './expense-create.dto'
 
-export class UpdateExpenseDto extends CreateExpenseDto {
+export class ExpenseUpdateDto extends ExpenseCreateDto {
   @MinLength(1)
   @MaxLength(255)
   @IsString()

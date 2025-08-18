@@ -1,23 +1,31 @@
-import { Body, Controller, Post, Put } from '@nestjs/common'
-import { CreateExpenseUsecase } from '../usecases/create-expense.usecase'
-import { UpdateExpenseUsecase } from '../usecases/update-expense.usecase'
-import { UpdateExpenseDto } from '../dto/update-expense.dto'
-import { CreateExpenseDto } from '../dto/create-expense.dto'
+import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common'
+import { ExpenseCreateUsecase } from '../usecases/expense-create.usecase'
+import { ExpenseUpdateUsecase } from '../usecases/expense-update.usecase'
+import { ExpenseUpdateDto } from '../dto/expense-update.dto'
+import { ExpenseCreateDto } from '../dto/expense-create.dto'
+import { ExpensePaginateUsecase } from '../usecases/expense-paginate.usecase'
+import { ExpensePaginateDto } from '../dto/expense-paginate.dto'
 
 @Controller('expenses')
 export class ExpenseController {
   constructor(
-    private readonly createExpenseUsecase: CreateExpenseUsecase,
-    private readonly updateExpenseUsecase: UpdateExpenseUsecase,
+    private readonly createExpenseUsecase: ExpenseCreateUsecase,
+    private readonly updateExpenseUsecase: ExpenseUpdateUsecase,
+    private readonly expensePaginateUsecase: ExpensePaginateUsecase,
   ) {}
 
   @Put()
-  async update(@Body() body: UpdateExpenseDto) {
+  async update(@Body() body: ExpenseUpdateDto) {
     return await this.updateExpenseUsecase.exec(body)
   }
 
   @Post()
-  async create(@Body() body: CreateExpenseDto) {
+  async create(@Body() body: ExpenseCreateDto) {
     return await this.createExpenseUsecase.exec(body)
+  }
+
+  @Get()
+  async paginate(@Query() body: ExpensePaginateDto) {
+    return await this.expensePaginateUsecase.exec(body)
   }
 }

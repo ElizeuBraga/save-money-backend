@@ -7,10 +7,10 @@ import { Transactional } from 'typeorm-transactional'
 import { to } from '../../common/utils/to.util'
 import { changeError } from '../../common/utils/change-error.util'
 import { Expense } from '../../common/entities/Expense.entity'
-import { UpdateExpenseDto } from '../dto/update-expense.dto'
+import { ExpenseUpdateDto } from '../dto/expense-update.dto'
 
 @Injectable()
-export class UpdateExpenseUsecase {
+export class ExpenseUpdateUsecase {
   roles = [RoleEnum.EXPENSE_UPDATE]
 
   constructor(
@@ -20,7 +20,7 @@ export class UpdateExpenseUsecase {
   ) {}
 
   @Transactional()
-  async exec(body: UpdateExpenseDto) {
+  async exec(body: ExpenseUpdateDto) {
     this.authorizationService.validate(this.roles)
 
     const [err] = await to(this.repository.save(body))
