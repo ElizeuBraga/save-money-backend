@@ -12,7 +12,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { ulid } from 'ulid'
-import { ExpenseProduct } from './ExpenseProduct.entity'
+import { ProductExpense } from './ProductExpense.entity'
 
 @Entity()
 @Unique(['product'])
@@ -29,10 +29,10 @@ export class Expense extends BaseEntity {
   @Column()
   year: number
 
-  @ManyToOne(() => ExpenseProduct, (product) => product.expenses, {
+  @ManyToOne(() => ProductExpense, (product) => product.expenses, {
     nullable: false,
   })
-  product: ExpenseProduct
+  product: ProductExpense
 
   @OneToMany(() => Expense, (expense) => expense.expense)
   expenses: Expense[]

@@ -5,8 +5,8 @@ import { CategoryExpenseCreateUsecase } from '../usecases/category-expense-creat
 import { CategoryExpenseUpdateUsecase } from '../usecases/category-expense-update.usecase'
 import { CategoryExpenseGetUsecase } from '../usecases/category-expense-get.usecase'
 
-@Controller('expenses/categories')
-export class ExpenseController {
+@Controller('expenses/products')
+export class ExpenseProductController {
   constructor(
     private readonly categoryExpenseCreateUsecase: CategoryExpenseCreateUsecase,
     private readonly categoryExpenseUpdateDto: CategoryExpenseUpdateUsecase,

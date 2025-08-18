@@ -6,7 +6,7 @@ import { SERVICES } from './services'
 import { USE_CASES } from './usecases'
 import { ExpenseCategory } from '../common/entities/CategoryExpense.entity'
 import { Expense } from '../common/entities/Expense.entity'
-import { ExpenseProduct } from '../common/entities/ExpenseProduct.entity'
+import { ExpenseProduct } from '../common/entities/ProductExpense.entity'
 
 @Module({
   imports: [

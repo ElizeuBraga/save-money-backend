@@ -11,7 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { ulid } from 'ulid'
-import { ExpenseProduct } from './ExpenseProduct.entity'
+import { ProductExpense } from './ProductExpense.entity'
 
 @Entity()
 @Unique(['name'])
@@ -22,8 +22,8 @@ export class CategoryExpense extends BaseEntity {
   @Column({ length: 255 })
   name: string
 
-  @OneToMany(() => ExpenseProduct, (product) => product.category)
-  products: ExpenseProduct[]
+  @OneToMany(() => ProductExpense, (product) => product.category)
+  products: ProductExpense[]
 
   @CreateDateColumn()
   createdAt: Date

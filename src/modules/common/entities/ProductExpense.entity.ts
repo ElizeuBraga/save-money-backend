@@ -17,7 +17,7 @@ import { Expense } from './Expense.entity'
 
 @Entity()
 @Unique(['name'])
-export class ExpenseProduct extends BaseEntity {
+export class ProductExpense extends BaseEntity {
   @PrimaryColumn({ length: 26 })
   id: string
 
