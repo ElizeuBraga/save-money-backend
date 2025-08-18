@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { App } from 'supertest/types'
 import { createTestApp, getToken } from './utils/test-setup'
-import { Category } from '../src/modules/common/entities/Category.entity'
+import { Category } from '../src/modules/common/entities/InvestmentCategory.entity'
 
 const endPoint = '/products'
 let token = ''

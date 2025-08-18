@@ -10,6 +10,7 @@ import { JwtAuthGuard } from './modules/auth/guard/jwt-auth.guard'
 import { DevelopModule } from './modules/develop/develop.module'
 import { dataSourceFactory } from './modules/common/database/data-source.factory'
 import { InvestmentModule } from './modules/investments/investment.module'
+import { ExpenseModule } from './modules/expenses/expense.module'
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { InvestmentModule } from './modules/investments/investment.module'
     AuthModule,
     DevelopModule,
     InvestmentModule,
+    ExpenseModule,
   ],
   controllers: [],
   providers: [

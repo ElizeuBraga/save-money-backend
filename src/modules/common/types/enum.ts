@@ -21,4 +21,8 @@ export enum RoleEnum {
   INVESTMENT_READ = 'investment:read',
   INVESTMENT_CREATE = 'investment:create',
   INVESTMENT_UPDATE = 'investment:update',
+
+  EXPENSE_READ = 'expense:read',
+  EXPENSE_CREATE = 'expense:create',
+  EXPENSE_UPDATE = 'expense:update',
 }
