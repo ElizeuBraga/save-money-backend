@@ -1,30 +1,30 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
-import { PaginateInvestmentUsecase } from '../usecases/paginate-investment.usecase'
-import { CreateInvestmentDto } from '../dto/create-investment.dto'
-import { CreateInvesmentUsecase } from '../usecases/create-invesment.usecase'
-import { UpdatePriceInvesmentUsecase } from '../usecases/update-price-invesment.usecase'
-import { UpdatePriceInvestmentDto } from '../dto/update-price-investment.dto'
-import { ContributionInvestmentDto } from '../dto/contribution-investment.dto'
-import { ContributionInvesmentUsecase } from '../usecases/contribution-invesment.usecase'
+import { InvestmentPaginateUsecase } from '../usecases/investment-paginate.usecase'
+import { InvestmentCreateDto } from '../dto/investment-create.dto'
+import { InvesmentCreateUsecase } from '../usecases/invesment-create.usecase'
+import { InvesmentUpdatePriceUsecase } from '../usecases/invesment-update-price.usecase'
+import { InvestmentUpdatePriceDto } from '../dto/investment-update-price.dto'
+import { InvestmentContributionDto } from '../dto/investment-contribution.dto'
+import { InvesmentContributionUsecase } from '../usecases/invesment-contribution.usecase'
 
 @Controller('investments')
 export class InvestmentController {
   constructor(
-    private readonly paginateInvestmentUsecase: PaginateInvestmentUsecase,
-    private readonly createInvesmentUsecase: CreateInvesmentUsecase,
-    private readonly updatePriceInvesmentUsecase: UpdatePriceInvesmentUsecase,
-    private readonly contributionInvesmentUsecase: ContributionInvesmentUsecase,
+    private readonly paginateInvestmentUsecase: InvestmentPaginateUsecase,
+    private readonly createInvesmentUsecase: InvesmentCreateUsecase,
+    private readonly updatePriceInvesmentUsecase: InvesmentUpdatePriceUsecase,
+    private readonly contributionInvesmentUsecase: InvesmentContributionUsecase,
   ) {}
 
   @Post()
-  async create(@Body() body: CreateInvestmentDto) {
+  async create(@Body() body: InvestmentCreateDto) {
     return await this.createInvesmentUsecase.exec(body)
   }
 
   @Put(':id')
   async updatePrice(
     @Param('id') id: string,
-    @Body() body: UpdatePriceInvestmentDto,
+    @Body() body: InvestmentUpdatePriceDto,
   ) {
     return await this.updatePriceInvesmentUsecase.exec(id, body)
   }
@@ -32,7 +32,7 @@ export class InvestmentController {
   @Post(':id/contribution')
   async contribution(
     @Param('id') id: string,
-    @Body() body: ContributionInvestmentDto,
+    @Body() body: InvestmentContributionDto,
   ) {
     return await this.contributionInvesmentUsecase.exec(id, body)
   }

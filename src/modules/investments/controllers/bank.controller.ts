@@ -1,27 +1,27 @@
 import { Body, Controller, Get, Post, Put } from '@nestjs/common'
-import { PaginateBankUsecase } from '../usecases/get-all-bank.usecase'
-import { CreateBankUsecase } from '../usecases/create-bank.usecase'
-import { UpdateBankUsecase } from '../usecases/update-bank.usecase'
-import { UpdateBankDto } from '../dto/update-bank.dto'
-import { CreateBankDto } from '../dto/create-bank.dto'
-import { GetBanksUsecase } from '../usecases/get-banks.usecase'
+import { PaginateBankUsecase } from '../usecases/bank-paginate.usecase'
+import { BankCreateUsecase } from '../usecases/bank-create.usecase'
+import { BankUpdateUsecase } from '../usecases/bank-update.usecase'
+import { BankUpdateDto } from '../dto/bank-update.dto'
+import { BankCreateDto } from '../dto/bank-create.dto'
+import { BanksGetUsecase } from '../usecases/banks-get.usecase'
 
 @Controller('banks')
 export class BankController {
   constructor(
     private readonly paginateBankUsecase: PaginateBankUsecase,
-    private readonly getBanksUsecase: GetBanksUsecase,
-    private readonly createBankUsecase: CreateBankUsecase,
-    private readonly updateBankUsecase: UpdateBankUsecase,
+    private readonly getBanksUsecase: BanksGetUsecase,
+    private readonly createBankUsecase: BankCreateUsecase,
+    private readonly updateBankUsecase: BankUpdateUsecase,
   ) {}
 
   @Put()
-  async update(@Body() body: UpdateBankDto) {
+  async update(@Body() body: BankUpdateDto) {
     return await this.updateBankUsecase.exec(body)
   }
 
   @Post()
-  async create(@Body() body: CreateBankDto) {
+  async create(@Body() body: BankCreateDto) {
     return await this.createBankUsecase.exec(body)
   }
 

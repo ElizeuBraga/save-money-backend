@@ -1,31 +1,31 @@
 import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common'
 import { PaginateProductUsecase } from '../usecases/paginate-product.usecase'
-import { CreateProductDto } from '../dto/create-product.dto'
-import { CreateProductUsecase } from '../usecases/create-product.usecase'
-import { UpdateProductDto } from '../dto/update-product.dto'
-import { UpdateProductUsecase } from '../usecases/update-product.usecase'
-import { PaginateProductDto } from '../dto/paginate-product.dto'
+import { ProductCreateDto } from '../dto/product-create.dto'
+import { ProductCreateUsecase } from '../usecases/product-create.usecase'
+import { ProductUpdateDto } from '../dto/product-update.dto'
+import { ProductUpdateUsecase } from '../usecases/product-update.usecase'
+import { ProductPaginateDto } from '../dto/product-paginate.dto'
 
 @Controller('products')
 export class ProductController {
   constructor(
     private readonly paginateCategoryUsecase: PaginateProductUsecase,
-    private readonly createProductUsecase: CreateProductUsecase,
-    private readonly updateProductUsecase: UpdateProductUsecase,
+    private readonly createProductUsecase: ProductCreateUsecase,
+    private readonly updateProductUsecase: ProductUpdateUsecase,
   ) {}
 
   @Post()
-  async create(@Body() body: CreateProductDto) {
+  async create(@Body() body: ProductCreateDto) {
     return await this.createProductUsecase.exec(body)
   }
 
   @Put()
-  async update(@Body() body: UpdateProductDto) {
+  async update(@Body() body: ProductUpdateDto) {
     return await this.updateProductUsecase.exec(body)
   }
 
   @Get()
-  async paginate(@Query() body: PaginateProductDto) {
+  async paginate(@Query() body: ProductPaginateDto) {
     return this.paginateCategoryUsecase.exec(body)
   }
 }

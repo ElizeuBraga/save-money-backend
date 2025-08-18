@@ -6,7 +6,7 @@ import { Repository } from 'typeorm'
 import { Product } from '../../common/entities/Product.entity'
 import sumBy from '../../common/utils/sum-by.util'
 import percent from '../../common/utils/percent.util.'
-import { PaginateProductDto } from '../dto/paginate-product.dto'
+import { ProductPaginateDto } from '../dto/product-paginate.dto'
 
 @Injectable()
 export class PaginateProductUsecase {
@@ -18,7 +18,7 @@ export class PaginateProductUsecase {
     private readonly authorizationService: AuthorizationService,
   ) {}
 
-  async exec(body: PaginateProductDto) {
+  async exec(body: ProductPaginateDto) {
     this.authorizationService.validate(this.roles)
 
     const products = await this.repository.find({

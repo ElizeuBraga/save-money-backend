@@ -1,41 +1,41 @@
-import { PaginateInvestmentUsecase } from './paginate-investment.usecase'
-import { CreateInvesmentUsecase } from './create-invesment.usecase'
-import { UpdatePriceInvesmentUsecase } from './update-price-invesment.usecase'
-import { ContributionInvesmentUsecase } from './contribution-invesment.usecase'
-import { CreateBankUsecase } from './create-bank.usecase'
-import { UpdateBankUsecase } from './update-bank.usecase'
-import { PaginateBankUsecase } from './get-all-bank.usecase'
-import { PaginateCategoryUsecase } from './paginate-category.usecase'
-import { CreateCategoryUsecase } from './create-category.usecase'
-import { UpdateCategoryUsecase } from './update-category.usecase'
-import { PaginatePaperUsecase } from './paginate-paper.usecase'
-import { CreatePaperUsecase } from './create-paper.usecase'
+import { InvestmentPaginateUsecase } from './investment-paginate.usecase'
+import { InvesmentCreateUsecase } from './invesment-create.usecase'
+import { InvesmentUpdatePriceUsecase } from './invesment-update-price.usecase'
+import { InvesmentContributionUsecase } from './invesment-contribution.usecase'
+import { BankCreateUsecase } from './bank-create.usecase'
+import { BankUpdateUsecase } from './bank-update.usecase'
+import { PaginateBankUsecase } from './bank-paginate.usecase'
+import { CategoryPaginateUsecase } from './category-paginate.usecase'
+import { CategoryCreateUsecase } from './category-create.usecase'
+import { CategoryUpdateUsecase } from './category-update.usecase'
+import { PaperPaginateUsecase } from './paper-paginate.usecase'
+import { PaperCreateUsecase } from './paper-create.usecase'
 import { PaginateProductUsecase } from './paginate-product.usecase'
-import { CreateProductUsecase } from './create-product.usecase'
-import { UpdateProductUsecase } from './update-product.usecase'
-import { GetBanksUsecase } from './get-banks.usecase'
-import { UpdatePaperUsecase } from './update-paper.usecase'
-import { GetPapersUsecase } from './get-papers.usecase'
-import { GetCategoriesUsecase } from './get-categories.usecase'
+import { ProductCreateUsecase } from './product-create.usecase'
+import { ProductUpdateUsecase } from './product-update.usecase'
+import { BanksGetUsecase } from './banks-get.usecase'
+import { PaperUpdateUsecase } from './paper-update.usecase'
+import { PapersGetUsecase } from './papers-get.usecase'
+import { CategoriesGetUsecase } from './categories-get.usecase'
 
 export const USE_CASES = [
-  PaginateInvestmentUsecase,
-  CreateInvesmentUsecase,
-  UpdatePriceInvesmentUsecase,
-  ContributionInvesmentUsecase,
+  InvestmentPaginateUsecase,
+  InvesmentCreateUsecase,
+  InvesmentUpdatePriceUsecase,
+  InvesmentContributionUsecase,
   PaginateBankUsecase,
-  CreateBankUsecase,
-  UpdateBankUsecase,
-  PaginateCategoryUsecase,
-  CreateCategoryUsecase,
-  UpdateCategoryUsecase,
-  PaginatePaperUsecase,
-  CreatePaperUsecase,
+  BankCreateUsecase,
+  BankUpdateUsecase,
+  CategoryPaginateUsecase,
+  CategoryCreateUsecase,
+  CategoryUpdateUsecase,
+  PaperPaginateUsecase,
+  PaperCreateUsecase,
   PaginateProductUsecase,
-  CreateProductUsecase,
-  UpdateProductUsecase,
-  GetBanksUsecase,
-  UpdatePaperUsecase,
-  GetPapersUsecase,
-  GetCategoriesUsecase,
+  ProductCreateUsecase,
+  ProductUpdateUsecase,
+  BanksGetUsecase,
+  PaperUpdateUsecase,
+  PapersGetUsecase,
+  CategoriesGetUsecase,
 ]

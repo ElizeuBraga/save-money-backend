@@ -1,27 +1,27 @@
 import { Body, Controller, Get, Post, Put } from '@nestjs/common'
-import { PaginatePaperUsecase } from '../usecases/paginate-paper.usecase'
-import { CreatePaperDto } from '../dto/create-paper.dto'
-import { CreatePaperUsecase } from '../usecases/create-paper.usecase'
-import { UpdatePaperDto } from '../dto/update-paper.dto'
-import { UpdatePaperUsecase } from '../usecases/update-paper.usecase'
-import { GetPapersUsecase } from '../usecases/get-papers.usecase'
+import { PaperPaginateUsecase } from '../usecases/paper-paginate.usecase'
+import { PaperCreateDto } from '../dto/paper-create.dto'
+import { PaperCreateUsecase } from '../usecases/paper-create.usecase'
+import { PaperUpdateDto } from '../dto/paper-update.dto'
+import { PaperUpdateUsecase } from '../usecases/paper-update.usecase'
+import { PapersGetUsecase } from '../usecases/papers-get.usecase'
 
 @Controller('papers')
 export class PaperController {
   constructor(
-    private readonly paginateCategoryUsecase: PaginatePaperUsecase,
-    private readonly createCategoryUsecase: CreatePaperUsecase,
-    private readonly updatePaperUsecase: UpdatePaperUsecase,
-    private readonly getPapersUsecase: GetPapersUsecase,
+    private readonly paginateCategoryUsecase: PaperPaginateUsecase,
+    private readonly createCategoryUsecase: PaperCreateUsecase,
+    private readonly updatePaperUsecase: PaperUpdateUsecase,
+    private readonly getPapersUsecase: PapersGetUsecase,
   ) {}
 
   @Post()
-  async create(@Body() body: CreatePaperDto) {
+  async create(@Body() body: PaperCreateDto) {
     return await this.createCategoryUsecase.exec(body)
   }
 
   @Put()
-  async update(@Body() body: UpdatePaperDto) {
+  async update(@Body() body: PaperUpdateDto) {
     return await this.updatePaperUsecase.exec(body)
   }
 
