@@ -8,10 +8,11 @@ import { to } from '../../common/utils/to.util'
 import { changeError } from '../../common/utils/change-error.util'
 import { Expense } from '../../common/entities/Expense.entity'
 import { ExpenseCreateDto } from '../dto/expense-create.dto'
+import { ulid } from 'ulid'
 
 @Injectable()
 export class ExpenseCreateUsecase {
-  roles = [RoleEnum.BANK_CREATE]
+  roles = [RoleEnum.EXPENSE_CREATE]
 
   constructor(
     @InjectRepository(Expense)
@@ -23,7 +24,14 @@ export class ExpenseCreateUsecase {
   async exec(body: ExpenseCreateDto) {
     this.authorizationService.validate(this.roles)
 
-    const expense = this.repository.create(body)
+    const expense = this.repository.create({
+      price: body.price,
+      expiration: body.expiration,
+      product: { id: body.productId },
+    })
+
+    console.log(expense)
+
     const [err] = await to(this.repository.save(expense))
 
     if (err) {

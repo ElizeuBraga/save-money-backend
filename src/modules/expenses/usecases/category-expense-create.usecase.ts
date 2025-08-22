@@ -11,7 +11,7 @@ import { CategoryExpense } from '../../common/entities/CategoryExpense.entity'
 
 @Injectable()
 export class CategoryExpenseCreateUsecase {
-  roles = [RoleEnum.BANK_CREATE]
+  roles = [RoleEnum.CATEGORY_CREATE]
 
   constructor(
     @InjectRepository(CategoryExpense)

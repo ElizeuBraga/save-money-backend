@@ -23,22 +23,21 @@ export class Expense extends BaseEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number
 
-  @Column()
-  month: number
-
-  @Column()
-  year: number
-
   @ManyToOne(() => ProductExpense, (product) => product.expenses, {
     nullable: false,
   })
   product: ProductExpense
 
   @OneToMany(() => Expense, (expense) => expense.expense)
-  expenses: Expense[]
+  expenses?: Expense[]
 
-  @ManyToOne(() => Expense, (expense) => expense.expenses)
-  expense: Expense
+  @ManyToOne(() => Expense, (expense) => expense.expenses, {
+    nullable: true,
+  })
+  expense?: Expense
+
+  @Column({ type: 'date' })
+  expiration: Date
 
   @CreateDateColumn()
   createdAt: Date

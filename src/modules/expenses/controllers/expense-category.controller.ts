@@ -6,21 +6,21 @@ import { CategoryExpenseUpdateUsecase } from '../usecases/category-expense-updat
 import { CategoryExpenseGetUsecase } from '../usecases/category-expense-get.usecase'
 
 @Controller('expenses/categories')
-export class ExpenseController {
+export class ExpenseCategoryController {
   constructor(
     private readonly categoryExpenseCreateUsecase: CategoryExpenseCreateUsecase,
     private readonly categoryExpenseUpdateDto: CategoryExpenseUpdateUsecase,
     private readonly categoryExpenseGetUsecase: CategoryExpenseGetUsecase,
   ) {}
 
-  @Put()
-  async update(@Body() body: CategoryExpenseUpdateDto) {
-    return await this.categoryExpenseUpdateDto.exec(body)
-  }
-
   @Post()
   async create(@Body() body: CategoryExpenseCreateDto) {
     return await this.categoryExpenseCreateUsecase.exec(body)
+  }
+
+  @Put()
+  async update(@Body() body: CategoryExpenseUpdateDto) {
+    return await this.categoryExpenseUpdateDto.exec(body)
   }
 
   @Get()

@@ -58,6 +58,15 @@ export class User extends BaseEntity {
     'investment:read',
     'investment:create',
     'investment:update',
+    'expenseProduct:read',
+    'expenseProduct:create',
+    'expenseProduct:update',
+    'expenseCategory:read',
+    'expenseCategory:create',
+    'expenseCategory:update',
+    'expense:read',
+    'expense:update',
+    'expense:create',
   ]
 
   @BeforeInsert()

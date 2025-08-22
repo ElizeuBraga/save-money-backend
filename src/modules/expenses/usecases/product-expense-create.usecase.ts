@@ -11,7 +11,7 @@ import { ProductExpenseCreateDto } from '../dto/product-expense-create.dto'
 
 @Injectable()
 export class ProductExpenseCreateUsecase {
-  roles = [RoleEnum.BANK_CREATE]
+  roles = [RoleEnum.EXPENSE_PRODUCT_CREATE]
 
   constructor(
     @InjectRepository(ProductExpense)
@@ -23,8 +23,12 @@ export class ProductExpenseCreateUsecase {
   async exec(body: ProductExpenseCreateDto) {
     this.authorizationService.validate(this.roles)
 
-    const expense = this.repository.create(body)
-    const [err] = await to(this.repository.save(expense))
+    const product = this.repository.create({
+      name: body.name,
+      category: { id: body.categoryId },
+    })
+
+    const [err] = await to(this.repository.save(product))
 
     if (err) {
       changeError(err)

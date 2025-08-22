@@ -23,6 +23,7 @@ export class ExpensePaginateUsecase {
       select: {
         id: true,
         price: true,
+        expiration: true,
         product: {
           id: true,
           name: true,
