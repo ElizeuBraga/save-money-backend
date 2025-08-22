@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AuthorizationService } from 'src/modules/authorization/services/authorization.service'
 import { RoleEnum } from 'src/modules/common/types/enum'
-import { Repository } from 'typeorm'
+import { IsNull, Repository } from 'typeorm'
 import { Expense } from '../../common/entities/Expense.entity'
 import { ExpensePaginateDto } from '../dto/expense-paginate.dto'
 
@@ -29,7 +29,10 @@ export class ExpensePaginateUsecase {
           name: true,
         },
       },
-      relations: ['product', 'expenses'],
+      relations: ['product', 'expenses.product'],
+      where: {
+        expense: { id: IsNull() },
+      },
     })
   }
 }

@@ -28,6 +28,7 @@ export class ExpenseCreateUsecase {
       price: body.price,
       expiration: body.expiration,
       product: { id: body.productId },
+      expense: { id: body?.expenseId },
     })
 
     console.log(expense)

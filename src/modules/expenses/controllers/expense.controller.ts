@@ -14,14 +14,14 @@ export class ExpenseController {
     private readonly expensePaginateUsecase: ExpensePaginateUsecase,
   ) {}
 
-  @Put()
-  async update(@Body() body: ExpenseUpdateDto) {
-    return await this.updateExpenseUsecase.exec(body)
-  }
-
   @Post()
   async create(@Body() body: ExpenseCreateDto) {
     return await this.createExpenseUsecase.exec(body)
+  }
+
+  @Put()
+  async update(@Body() body: ExpenseUpdateDto) {
+    return await this.updateExpenseUsecase.exec(body)
   }
 
   @Get()

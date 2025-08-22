@@ -1,6 +1,7 @@
 import {
   IsDateString,
   IsNumber,
+  IsOptional,
   IsString,
   Max,
   MaxLength,
@@ -18,6 +19,11 @@ export class ExpenseCreateDto {
   @MaxLength(255)
   @IsString()
   productId: string
+
+  @IsOptional()
+  @MaxLength(255)
+  @IsString()
+  expenseId?: string
 
   @MinLength(1)
   @IsDateString()

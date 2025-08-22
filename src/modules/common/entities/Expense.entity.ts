@@ -8,14 +8,12 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryColumn,
-  Unique,
   UpdateDateColumn,
 } from 'typeorm'
 import { ulid } from 'ulid'
 import { ProductExpense } from './ProductExpense.entity'
 
 @Entity()
-@Unique(['product'])
 export class Expense extends BaseEntity {
   @PrimaryColumn({ length: 26 })
   id: string

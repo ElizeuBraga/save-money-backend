@@ -6,8 +6,4 @@ export class ExpenseUpdateDto extends ExpenseCreateDto {
   @MaxLength(255)
   @IsString()
   id: string
-
-  @MaxLength(255)
-  @IsString()
-  expenseId: string
 }
