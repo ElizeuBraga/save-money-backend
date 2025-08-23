@@ -1,6 +1,7 @@
 services:
   backend:
-    container_name: save-money-backend
+    container_name: sm-backend-dev
+    image: sm-backend:dev
     build:
       context: .
       dockerfile: devops/Dockerfile
