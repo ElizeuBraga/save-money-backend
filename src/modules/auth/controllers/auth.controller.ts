@@ -51,6 +51,7 @@ export class AuthController {
     return result
   }
 
+  @ApiBody({ type: CreateUserDto })
   @Public()
   @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Post('register')

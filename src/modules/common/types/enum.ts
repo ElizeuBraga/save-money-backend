@@ -25,6 +25,7 @@ export enum RoleEnum {
   EXPENSE_READ = 'expense:read',
   EXPENSE_CREATE = 'expense:create',
   EXPENSE_UPDATE = 'expense:update',
+  EXPENSE_DELETE = 'expense:delete',
 
   EXPENSE_CATEGORY_READ = 'expenseCategory:read',
   EXPENSE_CATEGORY_CREATE = 'expenseCategory:create',

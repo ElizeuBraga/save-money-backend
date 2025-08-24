@@ -18,7 +18,7 @@ export class PaginateBankUsecase {
   ) {}
 
   async exec() {
-    this.authorizationService.validate(this.roles)
+    const userId = this.authorizationService.validateUserPermission(this.roles)
 
     const banks = await this.repository.find({
       select: {
@@ -27,6 +27,13 @@ export class PaginateBankUsecase {
         investments: { id: true, price: true, paper: { id: true, name: true } },
       },
       relations: ['investments.paper'],
+      where: {
+        investments: {
+          user: {
+            id: userId,
+          },
+        },
+      },
     })
 
     const investments = banks.flatMap((bank) => bank.investments)

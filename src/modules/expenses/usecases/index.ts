@@ -7,6 +7,7 @@ import { ProductExpenseCreateUsecase } from './product-expense-create.usecase'
 import { CategoryExpenseUpdateUsecase } from './category-expense-update.usecase'
 import { CategoryExpenseGetUsecase } from './category-expense-get.usecase'
 import { CategoryExpenseCreateUsecase } from './category-expense-create.usecase'
+import { ExpenseDeleteUsecase } from './expense-delete.usecase'
 
 export const USE_CASES = [
   ExpenseCreateUsecase,
@@ -18,4 +19,5 @@ export const USE_CASES = [
   CategoryExpenseUpdateUsecase,
   CategoryExpenseGetUsecase,
   CategoryExpenseCreateUsecase,
+  ExpenseDeleteUsecase,
 ]
