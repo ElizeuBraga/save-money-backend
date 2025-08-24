@@ -12,7 +12,7 @@ async function bootstrap() {
   app.setGlobalPrefix(appPrefix)
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3001',
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 
