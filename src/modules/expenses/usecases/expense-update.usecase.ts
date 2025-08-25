@@ -8,6 +8,7 @@ import { to } from '../../common/utils/to.util'
 import { changeError } from '../../common/utils/change-error.util'
 import { Expense } from '../../common/entities/Expense.entity'
 import { ExpenseUpdateDto } from '../dto/expense-update.dto'
+import { ExpenseService } from '../services/expense.service'
 
 @Injectable()
 export class ExpenseUpdateUsecase {
@@ -17,6 +18,7 @@ export class ExpenseUpdateUsecase {
     @InjectRepository(Expense)
     private readonly repository: Repository<Expense>,
     private readonly authorizationService: AuthorizationService,
+    private readonly expenseService: ExpenseService,
   ) {}
 
   @Transactional()
@@ -25,6 +27,7 @@ export class ExpenseUpdateUsecase {
 
     const [err] = await to(this.repository.save(body))
 
+    await this.expenseService.resetExpenseFather(body.expenseId)
     if (err) {
       changeError(err)
     }
