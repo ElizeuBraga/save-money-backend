@@ -1,4 +1,10 @@
-import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
+import {
+  IsArray,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator'
 
 export class ExpenseDeleteDto {
   @MinLength(1)
@@ -10,4 +16,8 @@ export class ExpenseDeleteDto {
   @MaxLength(255)
   @IsString()
   expenseId?: string
+
+  @IsArray()
+  @IsOptional()
+  expensesIds?: string[]
 }

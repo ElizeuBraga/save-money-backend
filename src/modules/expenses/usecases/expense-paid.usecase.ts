@@ -7,12 +7,12 @@ import { Transactional } from 'typeorm-transactional'
 import { to } from '../../common/utils/to.util'
 import { changeError } from '../../common/utils/change-error.util'
 import { Expense } from '../../common/entities/Expense.entity'
-import { ExpenseDeleteDto } from '../dto/expense-delete.dto'
 import { ExpenseService } from '../services/expense.service'
+import { ExpensePaidDto } from '../dto/expense-paid.dto'
 
 @Injectable()
-export class ExpenseDeleteUsecase {
-  roles = [RoleEnum.EXPENSE_DELETE]
+export class ExpensePaidUsecase {
+  roles = [RoleEnum.EXPENSE_UPDATE]
 
   constructor(
     @InjectRepository(Expense)
@@ -22,25 +22,15 @@ export class ExpenseDeleteUsecase {
   ) {}
 
   @Transactional()
-  async exec(body: ExpenseDeleteDto) {
+  async exec(body: ExpensePaidDto) {
     this.authorizationService.validate(this.roles)
 
-    const [err] = await to(this.repository.softDelete({ id: body.id }))
+    const [err] = await to(
+      this.repository.save({ id: body.id, paid: !body.paid }),
+    )
 
     if (err) {
       changeError(err)
     }
-
-    if (body.expensesIds?.length) {
-      for (const id of body.expensesIds) {
-        const [err] = await to(this.repository.softDelete({ id }))
-
-        if (err) {
-          changeError(err)
-        }
-      }
-    }
-
-    await this.expenseService.resetExpenseFather(body.expenseId)
   }
 }

@@ -2,12 +2,11 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AuthorizationService } from 'src/modules/authorization/services/authorization.service'
 import { RoleEnum } from 'src/modules/common/types/enum'
-import { IsNull, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 import { Expense } from '../../common/entities/Expense.entity'
-import { ExpensePaginateDto } from '../dto/expense-paginate.dto'
 
 @Injectable()
-export class ExpensePaginateUsecase {
+export class ExpenseChildrenUsecase {
   roles = [RoleEnum.EXPENSE_READ]
 
   constructor(
@@ -16,7 +15,7 @@ export class ExpensePaginateUsecase {
     private readonly authorizationService: AuthorizationService,
   ) {}
 
-  async exec(body: ExpensePaginateDto) {
+  async exec(id: string) {
     this.authorizationService.validate(this.roles)
 
     return await this.repository.find({
@@ -29,21 +28,13 @@ export class ExpensePaginateUsecase {
           id: true,
           name: true,
         },
-        expenses: {
+        expense: {
           id: true,
-          price: true,
-          paid: true,
-          expense: {
-            id: true,
-            price: true,
-            expiration: true,
-            paid: true,
-          },
         },
       },
-      relations: ['product', 'expenses.expense', 'expenses.product', 'expense'],
+      relations: ['product', 'expense'],
       where: {
-        expense: { id: IsNull() },
+        expense: { id },
       },
     })
   }

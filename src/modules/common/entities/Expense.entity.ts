@@ -37,6 +37,9 @@ export class Expense extends BaseEntity {
   @Column({ type: 'date' })
   expiration: Date
 
+  @Column({ default: false })
+  paid: boolean
+
   @CreateDateColumn()
   createdAt: Date
 
