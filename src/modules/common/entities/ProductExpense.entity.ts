@@ -32,6 +32,8 @@ export class ProductExpense extends BaseEntity {
   @OneToMany(() => Expense, (expense) => expense.product)
   expenses: Expense[]
 
+  totalExpense?: number
+
   @CreateDateColumn()
   createdAt: Date
 
