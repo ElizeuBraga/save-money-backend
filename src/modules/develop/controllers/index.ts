@@ -1,3 +1,3 @@
-import { ResetController } from './reset.controller'
+import { TodoController } from './todo.controller'
 
-export const CONTROLLERS = [ResetController]
+export const CONTROLLERS = [TodoController]
