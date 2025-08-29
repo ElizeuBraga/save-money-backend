@@ -38,7 +38,5 @@ export class ExpenseCreateUsecase {
     if (err) {
       changeError(err)
     }
-
-    await this.expenseService.resetExpenseFather(body.expenseId)
   }
 }

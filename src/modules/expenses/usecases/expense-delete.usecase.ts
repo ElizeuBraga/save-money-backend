@@ -40,7 +40,5 @@ export class ExpenseDeleteUsecase {
         }
       }
     }
-
-    await this.expenseService.resetExpenseFather(body.expenseId)
   }
 }

@@ -27,7 +27,6 @@ export class ExpenseUpdateUsecase {
 
     const [err] = await to(this.repository.save(body))
 
-    await this.expenseService.resetExpenseFather(body.expenseId)
     if (err) {
       changeError(err)
     }
