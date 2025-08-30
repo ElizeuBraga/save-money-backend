@@ -1,0 +1,18 @@
+services:
+  backend_prod:
+    container_name: sm-backend-prod
+    image: sm-backend:prod
+    build:
+      context: .
+      dockerfile: devops/Dockerfile
+    command: "/bin/sh -c 'npm install && npm run migration:run && npm run start:prod'"
+    working_dir: /app
+    volumes:
+      - "./:/app"
+    ports:
+      - "4001:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    restart: always
