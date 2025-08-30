@@ -12,6 +12,7 @@ import { ExpensePaidUsecase } from './expense-paid.usecase'
 import { ExpenseChildrenUsecase } from './expense-children.usecase'
 import { ProductExpensePaginateUsecase } from './product-expense-paginate.usecase'
 import { CategoryExpensePaginateUsecase } from './category-expense-paginate.usecase'
+import { ExpenseMonthsUsecase } from './expense-months.usecase'
 
 export const USE_CASES = [
   ExpenseCreateUsecase,
@@ -28,4 +29,5 @@ export const USE_CASES = [
   ExpenseChildrenUsecase,
   ProductExpensePaginateUsecase,
   CategoryExpensePaginateUsecase,
+  ExpenseMonthsUsecase,
 ]

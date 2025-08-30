@@ -19,6 +19,7 @@ import { ExpenseDeleteUsecase } from '../usecases/expense-delete.usecase'
 import { ExpensePaidDto } from '../dto/expense-paid.dto'
 import { ExpensePaidUsecase } from '../usecases/expense-paid.usecase'
 import { ExpenseChildrenUsecase } from '../usecases/expense-children.usecase'
+import { ExpenseMonthsUsecase } from '../usecases/expense-months.usecase'
 
 @Controller('expenses')
 export class ExpenseController {
@@ -29,6 +30,7 @@ export class ExpenseController {
     private readonly expenseDeleteUsecase: ExpenseDeleteUsecase,
     private readonly expensePaidUsecase: ExpensePaidUsecase,
     private readonly expenseChildrenUsecase: ExpenseChildrenUsecase,
+    private readonly expenseMonthsUsecase: ExpenseMonthsUsecase,
   ) {}
 
   @Post()
@@ -59,5 +61,10 @@ export class ExpenseController {
   @Get(':id/children')
   async children(@Param('id') id: string) {
     return await this.expenseChildrenUsecase.exec(id)
+  }
+
+  @Get('/months')
+  async months() {
+    return await this.expenseMonthsUsecase.exec()
   }
 }

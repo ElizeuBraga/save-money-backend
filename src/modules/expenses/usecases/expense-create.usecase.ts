@@ -33,6 +33,9 @@ export class ExpenseCreateUsecase {
       expense: { id: body?.expenseId },
     })
 
+    if (body.expenseId) {
+      await this.repository.save({ id: body.expenseId, price: 0 })
+    }
     const [err] = await to(this.repository.save(expense))
 
     if (err) {
